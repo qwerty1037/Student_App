@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("학생 어플"),
         ),
+        drawer: NavigationDrawer(),
         body: Center(
           child: homeWidget.elementAt(controller.currentIndex.value),
         ),
@@ -40,4 +41,59 @@ class HomeScreen extends StatelessWidget {
     Text("Home"),
     Text("Setting"),
   ];
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            buildHeader(context),
+            buildMenuItems(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildHeader(BuildContext context) => Container(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+        ),
+      );
+
+  Widget buildMenuItems(BuildContext context) => Container(
+        padding: EdgeInsets.all(16),
+        child: Wrap(
+          runSpacing: 8,
+          children: [
+            ListTile(
+              leading: Icon(Icons.home_outlined),
+              title: Text('home'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.home_outlined),
+              title: Text('home'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.home_outlined),
+              title: Text('home'),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.home_outlined),
+              title: Text('home'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      );
 }
