@@ -3,29 +3,33 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   Get.put(ThemeController());
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Student App',
-      theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(
-        //  seedColor: Get.find<ThemeController>().seedColor),
-        //textTheme:
-        //   GoogleFonts.notoSansNKoTextTheme(Theme.of(context).textTheme),
-        useMaterial3: true,
+    return Obx(
+      () => GetMaterialApp(
+        title: 'Student App',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            brightness: themeController.brightness,
+            seedColor: themeController.seedColor,
+          ),
+          // textTheme:
+          //     GoogleFonts.notoSansNKoTextTheme(Theme.of(context).textTheme),
+          useMaterial3: true,
+        ),
+        home: const HomeScreen(),
       ),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light,
-      home: const HomeScreen(),
     );
   }
 }

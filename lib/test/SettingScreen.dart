@@ -3,8 +3,6 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Controller/ThemeController.dart';
-import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:student_app/Screen/ThemeColorScreen.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
@@ -17,44 +15,39 @@ class SettingScreen extends StatelessWidget {
         title: const Text("Setting"),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: Obx(
-        () => SettingsList(
-          sections: [
-            SettingsSection(
-              title: 'Theme',
-              tiles: [
-                SettingsTile(
-                  title: 'Theme Color',
-                  subtitle: switch (themeController.seedColorIndex + 1) {
-                    1 => 'Cyan',
-                    2 => 'Blue',
-                    3 => 'Purple',
-                    4 => 'Pink',
-                    5 => 'Orange',
-                    6 => 'Yellow',
-                    7 => 'Green',
-                    8 => 'Teal',
-                    9 => 'Indigo',
-                    _ => 'error',
-                  },
-                  leading: const Icon(Icons.pallet),
-                  onPressed: (BuildContext context) {
-                    Get.to(() => ThemeColorSelectScreen());
-                  },
-                ),
-                // SettingsTile
-                SettingsTile.switchTile(
-                  title: 'Darkmode',
-                  leading: const Icon(Icons.fingerprint),
-                  switchValue: themeController.isDark.value,
-                  onToggle: (bool value) {
+      body: ListView(
+        padding: const EdgeInsets.all(8.0),
+        children: <Widget>[
+          Row(
+            children: [
+              Container(
+                height: 30,
+                child: const Text("테마 색"),
+              ),
+              Row(
+                children: kThemeSeedColors
+                    .map((e) => _buildSeedColorButton(e, context))
+                    .toList(),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                height: 30,
+                child: const Text("다크 모드"),
+              ),
+              Obx(
+                () => Switch(
+                  value: themeController.isDark.value,
+                  onChanged: (bool value) {
                     themeController.isDark.value = value;
                   },
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

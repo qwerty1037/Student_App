@@ -4,16 +4,25 @@ import 'package:get/get.dart';
 List<Color> kThemeSeedColors = [
   Colors.cyan,
   Colors.blue,
-  Colors.purple,
+  Colors.deepPurple,
   Colors.pink,
-  Colors.orange
+  Colors.orange,
+  Colors.yellow,
+  Colors.green,
+  Colors.teal,
+  Colors.indigo,
 ];
 
 class ThemeController extends GetxController {
-  RxInt _seedColorIndex = 0.obs;
+  final RxInt _seedColorIndex = 0.obs;
+  RxBool isDark = false.obs;
   Color get seedColor => kThemeSeedColors[_seedColorIndex.value];
+  int get seedColorIndex => _seedColorIndex.value;
 
   set seedColorIndex(int index) {
     _seedColorIndex.value = index;
   }
+
+  Brightness get brightness =>
+      isDark.value ? Brightness.dark : Brightness.light;
 }
