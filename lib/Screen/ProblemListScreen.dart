@@ -1,42 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
-import 'package:student_app/Component/HomeDrawer.dart';
-import 'package:student_app/Component/Homework.dart';
-import 'package:student_app/Test/HomeWork_Example.dart';
+import 'package:student_app/Component/Problem.dart';
+import 'package:student_app/Screen/SolveModeScreen.dart';
 
-class HomeWorkListScreen extends StatelessWidget {
-  const HomeWorkListScreen({super.key});
+class ProblemList extends StatelessWidget {
+  ProblemList({super.key, required this.problems, required this.title});
 
-  List<GestureDetector> _buildGridCards(BuildContext context) {
-    //로컬 스토리지에서 homework 정보 불러오기
+  List<Problem> problems;
+  String title;
 
-    List<HomeWork> HomeWorks = ExampleHomeWork;
-    if (HomeWorks.isEmpty) {
+  List<GestureDetector> _buildProblems(BuildContext context) {
+    if (problems.isEmpty) {
       return const <GestureDetector>[];
     }
 
-    final ThemeData theme = Theme.of(context);
-    // final NumberFormat formatter = NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toString());
-
-    return HomeWorks.map((HomeWork) {
+    return problems.map((problem) {
       return GestureDetector(
         onTap: () {
-          debugPrint("${HomeWork.title} 눌림");
-          //문제 리스트 페이지로 넘어갈 부분
+          Get.to(() => SolveScreen(problem: problem, index: problems.indexOf(problem)));
         },
         child: Card(
+          color: Theme.of(context).colorScheme.primaryContainer,
           clipBehavior: Clip.antiAlias,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  HomeWork.title,
-                  style: Theme.of(context).textTheme.displayLarge,
+          child: Padding(
+            padding: const EdgeInsets.all(outPadding),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: FittedBox(
+                    child: Text(
+                      "${problems.indexOf(problem) + 1}번 문제",
+                      style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                    ),
+                  ),
                 ),
-              ),
-              Text("${HomeWork.teacherName} 선생님"),
-              Text("${HomeWork.deadLine.month}월 ${HomeWork.deadLine.day}까지")
-            ],
+                Text(
+                  "걸린 시간 ${problem.time.inMinutes}분",
+                  style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -45,39 +49,33 @@ class HomeWorkListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-            Colors.white10,
-            Colors.white10,
-            Colors.black12,
-            Colors.black12,
-            Colors.black12,
-          ]),
+    return Stack(
+      children: [
+        Container(
+          color: Theme.of(context).colorScheme.primary,
         ),
-      ),
-      Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
+        Scaffold(
           backgroundColor: Colors.transparent,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(outPadding),
+          appBar: AppBar(
+            title: Center(
+              child: Text(
+                title,
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ),
+            backgroundColor: Colors.transparent,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          ),
+          body: SafeArea(
             child: GridView.count(
               crossAxisCount: 2,
               padding: const EdgeInsets.all(outPadding),
               childAspectRatio: 1.0,
-              children: _buildGridCards(context),
+              children: _buildProblems(context),
             ),
           ),
-        ),
-      )
-    ]);
+        )
+      ],
+    );
   }
 }

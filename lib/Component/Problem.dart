@@ -1,6 +1,7 @@
 class Problem {
-  Problem({required this.contents});
+  Problem({required this.questions});
 
   Duration time = const Duration(seconds: 0);
-  List<dynamic> contents;
+  bool isSolved = false;
+  List<dynamic> questions;
 }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/HomeDrawer.dart';
 import 'package:student_app/Component/HomeNavigator.dart';
-import 'package:student_app/Screen/ProblemListScreen.dart';
+import 'package:student_app/Screen/HomeWorkListScreen.dart';
 import 'package:student_app/Screen/SettingScreen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                             flex: 3,
                             child: HomeNavigator(
                               onPressed: () {
-                                Get.to(const HomeWorkListScreen());
+                                Get.to(() => const HomeWorkListScreen());
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
