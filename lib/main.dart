@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
 
 void main() {
   Get.put(ThemeController());
+  Get.put(SettingController());
   runApp(MyApp());
 }
 

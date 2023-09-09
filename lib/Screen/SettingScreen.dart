@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:student_app/Screen/ThemeColorScreen.dart';
@@ -9,6 +10,7 @@ import 'package:student_app/Screen/ThemeColorScreen.dart';
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
   final themeController = Get.find<ThemeController>();
+  final settingController = Get.find<SettingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,17 @@ class SettingScreen extends StatelessWidget {
       body: Obx(
         () => SettingsList(
           sections: [
+            SettingsSection(
+              title: "내 알림",
+              tiles: [
+                SettingsTile.switchTile(
+                  title: "과제 알림",
+                  subtitle: "과제가 나왔을 때 푸시 알림을 받으세요.",
+                  onToggle: (bool value) {},
+                  switchValue: settingController.taskPushAlert,
+                ),
+              ],
+            ),
             SettingsSection(
               title: 'Theme',
               tiles: [
