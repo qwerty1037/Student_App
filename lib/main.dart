@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   Get.put(ThemeController());
