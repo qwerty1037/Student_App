@@ -1,0 +1,11 @@
+import 'package:student_app/Component/Homework.dart';
+import 'package:student_app/Component/Problem.dart';
+
+List<HomeWork> ExampleHomeWork = [
+  HomeWork(deadLine: DateTime.utc(2023, 9, 10), title: "첫 데이터", teacherName: "이동규", problems: [
+    Problem(contents: ["다음중 옳은 것을 고르세요?", "뭐인마"])
+  ]),
+  HomeWork(deadLine: DateTime.utc(2023, 9, 12), title: "두번째 데이터", teacherName: "김성현", problems: [
+    Problem(contents: ["1+1은 뭘까"])
+  ])
+];
