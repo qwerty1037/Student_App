@@ -30,7 +30,8 @@ class SolveScreen extends StatelessWidget {
                   Text(
                     "${controller.index.value + 1}번 문제",
                   ),
-                  ProblemTimer(problem: controller.problems[controller.index.value])
+                  ProblemTimer(
+                      problem: controller.problems[controller.index.value])
                 ],
               ),
             ),
@@ -57,13 +58,16 @@ class SolveScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildProblem(controller.problems[controller.index.value], context),
+                _buildProblem(
+                    controller.problems[controller.index.value], context),
                 Container(
                     padding: const EdgeInsets.only(top: 10),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: DrawingBoard(
-                      controller: DrawingController(config: DrawConfig(color: Colors.black, contentType: SimpleLine)),
+                      controller: DrawingController(
+                          config: DrawConfig(
+                              color: Colors.black, contentType: SimpleLine)),
                       background: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
