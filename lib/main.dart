@@ -4,10 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
+import 'package:student_app/Trash/StopWatch/StopWatchState.dart';
+
+import 'Trash/StopWatch/StopwatchModel.dart';
 
 void main() {
   Get.put(ThemeController());
   Get.put(SettingController());
+  Get.put(StopwatchState(stopwatch: StopwatchModel.empty()));
   runApp(MyApp());
 }
 

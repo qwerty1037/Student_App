@@ -39,6 +39,7 @@ dependencies:
   flutter_settings_ui: ^2.0.1
   flutter_drawing_board: ^0.5.0
   
+  syncfusion_flutter_signaturepad: ^22.2.12
 
 dev_dependencies:
   flutter_test:
