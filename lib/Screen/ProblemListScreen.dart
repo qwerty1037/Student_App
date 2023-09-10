@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/Problem.dart';
+import 'package:student_app/Controller/SolveModeController.dart';
 import 'package:student_app/Screen/SolveModeScreen.dart';
 
 class ProblemList extends StatelessWidget {
-  ProblemList({super.key, required this.problems, required this.title});
+  ProblemList({super.key});
 
-  List<Problem> problems;
-  String title;
+  List<Problem> problems = Get.arguments["problems"];
+  String title = Get.arguments["title"];
 
   List<GestureDetector> _buildProblems(BuildContext context) {
     if (problems.isEmpty) {
@@ -18,7 +19,9 @@ class ProblemList extends StatelessWidget {
     return problems.map((problem) {
       return GestureDetector(
         onTap: () {
-          Get.to(() => SolveScreen(problem: problem, index: problems.indexOf(problem)));
+          Get.to(() => const SolveScreen(), binding: BindingsBuilder(() {
+            Get.put(SolveModeController(problems.indexOf(problem), problems));
+          }));
         },
         child: Card(
           color: Theme.of(context).colorScheme.primaryContainer,
@@ -36,7 +39,7 @@ class ProblemList extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "걸린 시간 ${problem.time.inMinutes}분",
+                  "걸린 시간 ${problem.minutes}분 ${problem.seconds}초",
                   style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
                 ),
               ],

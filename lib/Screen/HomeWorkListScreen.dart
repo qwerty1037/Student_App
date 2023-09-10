@@ -20,10 +20,7 @@ class HomeWorkListScreen extends StatelessWidget {
     return HomeWorks.map((HomeWork) {
       return GestureDetector(
         onTap: () {
-          Get.to(() => ProblemList(
-                problems: HomeWork.problems,
-                title: HomeWork.title,
-              ));
+          Get.to(() => ProblemList(), arguments: {"problems": HomeWork.problems, "title": HomeWork.title});
         },
         child: Card(
           color: Theme.of(context).colorScheme.primaryContainer,
