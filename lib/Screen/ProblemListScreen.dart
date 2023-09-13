@@ -34,13 +34,23 @@ class ProblemList extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                       "${problems.indexOf(problem) + 1}번 문제",
-                      style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                      style: problem.isSolved
+                          ? const TextStyle(color: Colors.grey)
+                          : TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer),
                     ),
                   ),
                 ),
                 Text(
                   "걸린 시간 ${problem.minutes}분 ${problem.seconds}초",
-                  style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                  style: problem.isSolved
+                      ? const TextStyle(color: Colors.grey)
+                      : TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontSize: 14),
                 ),
               ],
             ),
@@ -63,7 +73,8 @@ class ProblemList extends StatelessWidget {
             title: Center(
               child: Text(
                 title,
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -71,9 +82,9 @@ class ProblemList extends StatelessWidget {
           ),
           body: SafeArea(
             child: GridView.count(
-              crossAxisCount: 2,
+              crossAxisCount: 1,
               padding: const EdgeInsets.all(outPadding),
-              childAspectRatio: 1.0,
+              childAspectRatio: 10,
               children: _buildProblems(context),
             ),
           ),

@@ -16,9 +16,9 @@ class SolveScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Container(color: Colors.white
-          // Theme.of(context).colorScheme.primary,
-          ),
+      Container(
+        color: Theme.of(context).colorScheme.primaryContainer,
+      ),
       GetX<SolveModeController>(builder: (controller) {
         return Scaffold(
           backgroundColor: Colors.transparent,
@@ -30,13 +30,11 @@ class SolveScreen extends StatelessWidget {
                   Text(
                     "${controller.index.value + 1}번 문제",
                   ),
-                  ProblemTimer(
-                      problem: controller.problems[controller.index.value])
                 ],
               ),
             ),
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
             actions: [
               IconButton(
                 onPressed: () {
@@ -53,32 +51,125 @@ class SolveScreen extends StatelessWidget {
           ),
           //수정할 부분, 문제 부분 추가하고 풀이부분, 타이머 등 추가해야함
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildProblem(
-                    controller.problems[controller.index.value], context),
-                Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: DrawingBoard(
-                      controller: DrawingController(
-                          config: DrawConfig(
-                              color: Colors.black, contentType: SimpleLine)),
-                      background: SizedBox(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "문제",
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 5,
+                              child: ProblemTimer(
+                                problem:
+                                    controller.problems[controller.index.value],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
+                        child: DrawingBoard(
+                          controller: DrawingController(
+                            config: DrawConfig(
+                              color: Colors.black,
+                              contentType: SimpleLine,
+                            ),
+                          ),
+                          background: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            color: Colors.white,
+                          ),
+                          showDefaultActions: true,
+                          showDefaultTools: true,
+                        ),
                       ),
-                      showDefaultActions: true,
-                      showDefaultTools: true,
-                    )),
-                //저장 버튼
-              ],
+                      _buildProblem(
+                        controller.problems[controller.index.value],
+                        context,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "답: ",
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 10),
+                            height: MediaQuery.of(context).size.height * 0.1,
+                            child: DrawingBoard(
+                              controller: DrawingController(
+                                config: DrawConfig(
+                                  color: Colors.black,
+                                  contentType: SimpleLine,
+                                ),
+                              ),
+                              background: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                color: Colors.white,
+                              ),
+                              showDefaultActions: false,
+                              showDefaultTools: false,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  //저장 버튼
+                  Visibility(
+                    visible:
+                        controller.problems[controller.index.value].isSolved ==
+                            false,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        controller.problems[controller.index.value].isSolved =
+                            true;
+                        controller.incrementIndex(context);
+                      },
+                      child: Text("풀이 완료하기"),
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        controller.problems[controller.index.value].isSolved ==
+                            true,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        controller.problems[controller.index.value].isSolved =
+                            false;
+                      },
+                      child: Text("풀이 수정하기"),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )),
+          ),
         );
       })
     ]);

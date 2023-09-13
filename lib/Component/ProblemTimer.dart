@@ -19,13 +19,18 @@ class ProblemTimerState extends State<ProblemTimer> {
   @override
   void initState() {
     super.initState();
-    startTimer();
+    if (widget.problem.isSolved == false) {
+      startTimer();
+    }
   }
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(oneSec, (timer) {
       setState(() {
+        if (widget.problem.isSolved == true) {
+          timer.cancel();
+        }
         if (widget.problem.seconds < 59) {
           widget.problem.seconds++;
         } else {
@@ -38,7 +43,9 @@ class ProblemTimerState extends State<ProblemTimer> {
 
   @override
   void dispose() {
-    timer.cancel();
+    if (widget.problem.isSolved == false) {
+      timer.cancel();
+    }
     super.dispose();
   }
 
@@ -47,6 +54,7 @@ class ProblemTimerState extends State<ProblemTimer> {
     return FittedBox(
       child: Text(
         '시간 ${widget.problem.minutes}:${widget.problem.seconds.toString().padLeft(2, '0')}',
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

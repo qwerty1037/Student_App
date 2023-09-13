@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Student App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
