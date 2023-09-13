@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/HomeDrawer.dart';
 import 'package:student_app/Component/Homework.dart';
@@ -11,8 +12,9 @@ class HomeWorkListScreen extends StatelessWidget {
 
   List<GestureDetector> _buildHomeWork(BuildContext context) {
     //로컬 스토리지에서 homework 정보 불러오기
+    LocalStorage("User").setItem("HomeWork", ExampleHomeWork); //삭제할 부분, 테스트를 위해 사용중
 
-    List<HomeWork> HomeWorks = ExampleHomeWork;
+    List<HomeWork> HomeWorks = LocalStorage("User").getItem("HomeWork") ?? [];
     if (HomeWorks.isEmpty) {
       return const <GestureDetector>[];
     }

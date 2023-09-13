@@ -40,6 +40,7 @@ dependencies:
   flutter_drawing_board: ^0.5.0
   
   syncfusion_flutter_signaturepad: ^22.2.12
+  localstorage: ^4.0.1+4
 
 dev_dependencies:
   flutter_test:

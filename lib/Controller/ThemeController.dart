@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 
 List<Color> kThemeSeedColors = [
   Colors.cyan,
@@ -23,6 +24,14 @@ class ThemeController extends GetxController {
     _seedColorIndex.value = index;
   }
 
-  Brightness get brightness =>
-      isDark.value ? Brightness.dark : Brightness.light;
+  Brightness get brightness => isDark.value ? Brightness.dark : Brightness.light;
+
+  @override
+  void onInit() {
+    super.onInit();
+    var localstorage = LocalStorage("User");
+    //추후 user부분 아이디로 변경
+    _seedColorIndex.value = localstorage.getItem("seedColor") ?? 0;
+    isDark.value = localstorage.getItem("isDark") ?? false;
+  }
 }

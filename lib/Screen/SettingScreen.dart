@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -62,6 +63,7 @@ class SettingScreen extends StatelessWidget {
                   switchValue: themeController.isDark.value,
                   onToggle: (bool value) {
                     themeController.isDark.value = value;
+                    LocalStorage("User").setItem("isDark", value);
                   },
                 ),
               ],
@@ -80,8 +82,7 @@ class SettingScreen extends StatelessWidget {
         onTap: () {
           themeController.seedColorIndex = kThemeSeedColors.indexOf(color);
           Get.changeTheme(ThemeData.light().copyWith(
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: themeController.seedColor),
+            colorScheme: ColorScheme.fromSeed(seedColor: themeController.seedColor),
             useMaterial3: true,
           ));
         },

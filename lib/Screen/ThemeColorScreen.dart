@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 
 class ThemeColorSelectScreen extends StatelessWidget {
@@ -89,12 +90,11 @@ class ThemeColorSelectScreen extends StatelessWidget {
   }
 
   Widget trailingWidget(int index) {
-    return (themeController.seedColorIndex == index)
-        ? const Icon(Icons.check, color: Colors.blue)
-        : const Icon(null);
+    return (themeController.seedColorIndex == index) ? const Icon(Icons.check, color: Colors.blue) : const Icon(null);
   }
 
   void changeThemeColor(int index) {
     themeController.seedColorIndex = index;
+    LocalStorage("User").setItem("seedColor", index);
   }
 }
