@@ -22,6 +22,7 @@ class ProblemTimerState extends State<ProblemTimer> {
     if (widget.problem.isSolved == false) {
       startTimer();
     }
+    debugPrint("새 초시계");
   }
 
   void startTimer() {
