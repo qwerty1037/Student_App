@@ -15,14 +15,17 @@ class ProblemTimer extends StatefulWidget {
 
 class ProblemTimerState extends State<ProblemTimer> {
   late Timer timer;
+  bool isActive = false;
+
 
   @override
   void initState() {
     super.initState();
     if (widget.problem.isSolved == false) {
       startTimer();
+      isActive = true;
     }
-    debugPrint("새 초시계");
+    
   }
 
   void startTimer() {
@@ -44,7 +47,7 @@ class ProblemTimerState extends State<ProblemTimer> {
 
   @override
   void dispose() {
-    if (widget.problem.isSolved == false) {
+    if (isActive) {
       timer.cancel();
     }
     super.dispose();

@@ -146,6 +146,9 @@ class SolveScreen extends StatelessWidget {
                       onPressed: () {
                         controller.problems[controller.index.value].isSolved = true;
                         controller.incrementIndex(context);
+                        
+                        
+                        
                       },
                       child: const Text("풀이 완료하기"),
                     ),
