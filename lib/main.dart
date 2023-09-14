@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
+import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
 import 'Trash/StopWatch/StopwatchModel.dart';
 
 void main() {
   Get.put(ThemeController());
+  Get.put(TotalController());
   Get.put(SettingController());
   runApp(MyApp());
 }

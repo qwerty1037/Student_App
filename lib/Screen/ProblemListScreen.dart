@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
+import 'package:student_app/Component/Homework.dart';
 import 'package:student_app/Component/Problem.dart';
 import 'package:student_app/Controller/SolveModeController.dart';
+import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/SolveModeScreen.dart';
 
 class ProblemList extends StatelessWidget {
   ProblemList({super.key});
-
-  List<Problem> problems = Get.arguments["problems"];
-  String title = Get.arguments["title"];
+  int homeWorkIndex = Get.arguments["HomeWorkIndex"];
+  List<Problem> problems = Get.find<TotalController>().HomeWorks[Get.arguments["HomeWorkIndex"]].problems;
+  String title = Get.find<TotalController>().HomeWorks[Get.arguments["HomeWorkIndex"]].title;
 
   List<GestureDetector> _buildProblems(BuildContext context) {
     if (problems.isEmpty) {
@@ -17,6 +19,7 @@ class ProblemList extends StatelessWidget {
     }
 
     return problems.map((problem) {
+      int problemIndex = problems.indexOf(problem);
       return GestureDetector(
         onTap: () {
           Get.to(() => const SolveScreen(), binding: BindingsBuilder(() {
@@ -33,25 +36,17 @@ class ProblemList extends StatelessWidget {
                 Expanded(
                   child: FittedBox(
                     child: Text(
-                      "${problems.indexOf(problem) + 1}번 문제",
-                      style: problem.isSolved
-                          ? const TextStyle(color: Colors.grey)
-                          : TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer),
+                      "${problemIndex + 1}번 문제",
+                      style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                     ),
                   ),
                 ),
-                Text(
-                  "걸린 시간 ${problem.minutes}분 ${problem.seconds}초",
-                  style: problem.isSolved
-                      ? const TextStyle(color: Colors.grey)
-                      : TextStyle(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                          fontSize: 14),
-                ),
+                GetX<TotalController>(builder: (controller) {
+                  return Text(
+                    "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
+                    style: problem.isSolved ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                  );
+                }),
               ],
             ),
           ),
@@ -73,8 +68,7 @@ class ProblemList extends StatelessWidget {
             title: Center(
               child: Text(
                 title,
-                style:
-                    TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
             backgroundColor: Colors.transparent,

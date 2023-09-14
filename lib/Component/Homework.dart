@@ -7,4 +7,5 @@ class HomeWork {
   List<Problem> problems = [];
   DateTime deadLine;
   String teacherName;
+  bool isFinish = false;
 }

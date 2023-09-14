@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Problem.dart';
+import 'package:student_app/Controller/TotalController.dart';
 
 class ProblemTimer extends StatefulWidget {
   ProblemTimer({super.key, required this.problem});
@@ -17,7 +18,6 @@ class ProblemTimerState extends State<ProblemTimer> {
   late Timer timer;
   bool isActive = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,6 @@ class ProblemTimerState extends State<ProblemTimer> {
       startTimer();
       isActive = true;
     }
-    
   }
 
   void startTimer() {
@@ -42,6 +41,7 @@ class ProblemTimerState extends State<ProblemTimer> {
           widget.problem.seconds = 0;
         }
       });
+      Get.find<TotalController>().HomeWorks.refresh();
     });
   }
 

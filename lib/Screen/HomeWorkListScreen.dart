@@ -4,6 +4,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/HomeDrawer.dart';
 import 'package:student_app/Component/Homework.dart';
+import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/ProblemListScreen.dart';
 import 'package:student_app/Test/HomeWork_Example.dart';
 
@@ -14,7 +15,7 @@ class HomeWorkListScreen extends StatelessWidget {
     //로컬 스토리지에서 homework 정보 불러오기
     // LocalStorage("User").setItem("HomeWork", ExampleHomeWork); //삭제할 부분, 테스트를 위해 사용중
 
-    List<HomeWork> HomeWorks = LocalStorage("User").getItem("HomeWork") ?? ExampleHomeWork;
+    List<HomeWork> HomeWorks = Get.find<TotalController>().HomeWorks;
     if (HomeWorks.isEmpty) {
       return const <GestureDetector>[];
     }
@@ -22,7 +23,7 @@ class HomeWorkListScreen extends StatelessWidget {
     return HomeWorks.map((HomeWork) {
       return GestureDetector(
         onTap: () {
-          Get.to(() => ProblemList(), arguments: {"problems": HomeWork.problems, "title": HomeWork.title});
+          Get.to(() => ProblemList(), arguments: {"HomeWorkIndex": HomeWorks.indexOf(HomeWork)});
         },
         child: Card(
           color: Theme.of(context).colorScheme.primaryContainer,
