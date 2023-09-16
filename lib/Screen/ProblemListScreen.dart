@@ -41,7 +41,7 @@ class ProblemList extends StatelessWidget {
                   child: FittedBox(
                     child: Text(
                       "${problemIndex + 1}번 문제",
-                      style: problem.isSolved
+                      style: problem.isSolved.value
                           ? const TextStyle(color: Colors.grey)
                           : TextStyle(
                               color: Theme.of(context)
@@ -53,7 +53,7 @@ class ProblemList extends StatelessWidget {
                 GetX<TotalController>(builder: (controller) {
                   return Text(
                     "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
-                    style: problem.isSolved
+                    style: problem.isSolved.value
                         ? const TextStyle(color: Colors.grey)
                         : TextStyle(
                             color: Theme.of(context)

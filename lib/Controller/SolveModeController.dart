@@ -5,6 +5,15 @@ import 'package:student_app/Component/Problem.dart';
 class SolveModeController extends GetxController {
   RxInt index = 0.obs;
   List<Problem> problems = [];
+  RxBool refreshTimer = false.obs;
+
+  void restartTimer() {
+    if (refreshTimer.value == false) {
+      refreshTimer.value = true;
+    } else {
+      refreshTimer.value = false;
+    }
+  }
 
   final firstSnackBar = const SnackBar(
     content: Center(child: Text('첫번째 문제입니다')),

@@ -6,9 +6,10 @@ import 'package:student_app/Component/Problem.dart';
 import 'package:student_app/Controller/TotalController.dart';
 
 class ProblemTimer extends StatefulWidget {
-  ProblemTimer({super.key, required this.problem});
+  ProblemTimer({super.key, required this.problem, required this.refresh});
 
   Problem problem;
+  bool refresh;
 
   @override
   State<ProblemTimer> createState() => ProblemTimerState();
@@ -22,7 +23,7 @@ class ProblemTimerState extends State<ProblemTimer> {
   void initState() {
     debugPrint("initiate timer");
     super.initState();
-    if (widget.problem.isSolved == false) {
+    if (widget.problem.isSolved.value == false) {
       startTimer();
       isActive = true;
     }
@@ -31,7 +32,7 @@ class ProblemTimerState extends State<ProblemTimer> {
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(oneSec, (timer) {
-      if (widget.problem.isSolved == true) {
+      if (widget.problem.isSolved.value == true) {
         setState(() {
           timer.cancel();
         });

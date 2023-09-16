@@ -13,12 +13,6 @@ import 'package:student_app/Controller/SolveModeController.dart';
 
 class SolveScreen extends StatelessWidget {
   SolveScreen({super.key});
-  final drawingController = DrawingController(
-    config: DrawConfig(
-      color: Colors.black,
-      contentType: SimpleLine,
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +72,11 @@ class SolveScreen extends StatelessWidget {
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width / 5,
                               child: ProblemTimer(
-                                key: Key(controller.index.value.toString()),
+                                key: Key(controller.index.value.toString() +
+                                    controller.refreshTimer.value.toString()),
                                 problem:
                                     controller.problems[controller.index.value],
+                                refresh: controller.refreshTimer.value,
                               ),
                             ),
                           ),
@@ -94,7 +90,10 @@ class SolveScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: DrawingBoard(
-                          controller: drawingController,
+                          key: Key(controller.index.value.toString()),
+                          controller: controller
+                              .problems[controller.index.value]
+                              .problemDrawingController,
                           background: Container(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.7,
@@ -110,45 +109,24 @@ class SolveScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  /*
                   Row(
                     children: [
                       TextButton(
                         onPressed: () {
-                          controller.problems[controller.index.value]
-                              .drawingList = drawingController.getJsonList();
-                          debugPrint(
-                              "${controller.problems[controller.index.value].drawingList}");
+                          controller.problems[controller.index.value].save();
                         },
                         child: Text("저장하기"),
                       ),
                       TextButton(
                         onPressed: () {
-                          controller
-                              .problems[controller.index.value].drawingList
-                              .forEach((element) {
-                            switch (element['type']) {
-                              case 'SimpleLine':
-                                drawingController
-                                    .addContent(SimpleLine.fromJson(element));
-                              case 'SmoothLine':
-                                drawingController
-                                    .addContent(SmoothLine.fromJson(element));
-                              case 'StraightLine':
-                                drawingController
-                                    .addContent(StraightLine.fromJson(element));
-                              case 'Circle':
-                                drawingController
-                                    .addContent(Circle.fromJson(element));
-                              case 'Eraser':
-                                drawingController
-                                    .addContent(Eraser.fromJson(element));
-                            }
-                          });
+                          controller.problems[controller.index.value].load();
                         },
                         child: Text("불러오기"),
                       ),
                     ],
                   ),
+                  */
                   Row(
                     children: [
                       Text(
@@ -162,12 +140,10 @@ class SolveScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10),
                             height: MediaQuery.of(context).size.height * 0.1,
                             child: DrawingBoard(
-                              controller: DrawingController(
-                                config: DrawConfig(
-                                  color: Colors.black,
-                                  contentType: SimpleLine,
-                                ),
-                              ),
+                              key: Key(controller.index.value.toString()),
+                              controller: controller
+                                  .problems[controller.index.value]
+                                  .answerDrawingController,
                               background: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height:
@@ -185,26 +161,27 @@ class SolveScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   //저장 버튼
                   Visibility(
-                    visible:
-                        controller.problems[controller.index.value].isSolved ==
-                            false,
+                    visible: controller
+                            .problems[controller.index.value].isSolved.value ==
+                        false,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved =
-                            true;
+                        controller.problems[controller.index.value].isSolved
+                            .value = true;
                         controller.incrementIndex(context);
                       },
                       child: const Text("풀이 완료하기"),
                     ),
                   ),
                   Visibility(
-                    visible:
-                        controller.problems[controller.index.value].isSolved ==
-                            true,
+                    visible: controller
+                            .problems[controller.index.value].isSolved.value ==
+                        true,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved =
-                            false;
+                        controller.problems[controller.index.value].isSolved
+                            .value = false;
+                        controller.restartTimer();
                       },
                       child: const Text("풀이 수정하기"),
                     ),
