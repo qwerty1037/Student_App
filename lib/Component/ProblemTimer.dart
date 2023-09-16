@@ -20,6 +20,7 @@ class ProblemTimerState extends State<ProblemTimer> {
 
   @override
   void initState() {
+    debugPrint("initiate timer");
     super.initState();
     if (widget.problem.isSolved == false) {
       startTimer();
@@ -30,17 +31,20 @@ class ProblemTimerState extends State<ProblemTimer> {
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(oneSec, (timer) {
-      setState(() {
-        if (widget.problem.isSolved == true) {
+      if (widget.problem.isSolved == true) {
+        setState(() {
           timer.cancel();
-        }
-        if (widget.problem.seconds < 59) {
-          widget.problem.seconds++;
-        } else {
-          widget.problem.minutes++;
-          widget.problem.seconds = 0;
-        }
-      });
+        });
+      } else {
+        setState(() {
+          if (widget.problem.seconds < 59) {
+            widget.problem.seconds++;
+          } else {
+            widget.problem.minutes++;
+            widget.problem.seconds = 0;
+          }
+        });
+      }
       Get.find<TotalController>().HomeWorks.refresh();
     });
   }
@@ -50,6 +54,7 @@ class ProblemTimerState extends State<ProblemTimer> {
     if (isActive) {
       timer.cancel();
     }
+    debugPrint("timer disposed");
     super.dispose();
   }
 

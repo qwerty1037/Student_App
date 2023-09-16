@@ -20,7 +20,7 @@ class SolveModeController extends GetxController {
 
   void incrementIndex(BuildContext context) {
     if (index.value < problems.length - 1) {
-      index.value++;
+      index.value += 1;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(lastSnackBar);
     }
@@ -28,7 +28,7 @@ class SolveModeController extends GetxController {
 
   void decrementIndex(BuildContext context) {
     if (index.value > 0) {
-      index.value--;
+      index.value -= 1;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(firstSnackBar);
     }
