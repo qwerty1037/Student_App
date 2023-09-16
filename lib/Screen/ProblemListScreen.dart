@@ -24,34 +24,33 @@ class ProblemList extends StatelessWidget {
 
     return problems.map((problem) {
       int problemIndex = problems.indexOf(problem);
-      return GestureDetector(
-        onTap: () {
-          Get.to(() => SolveScreen(), binding: BindingsBuilder(() {
-            Get.put(SolveModeController(problems.indexOf(problem), problems));
-          }));
-        },
-        child: Card(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: const EdgeInsets.all(outPadding),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: FittedBox(
-                    child: Text(
-                      "${problemIndex + 1}번 문제",
-                      style: problem.isSolved.value
-                          ? const TextStyle(color: Colors.grey)
-                          : TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer),
+      return GestureDetector(onTap: () {
+        Get.to(() => SolveScreen(), binding: BindingsBuilder(() {
+          Get.put(SolveModeController(problems.indexOf(problem), problems));
+        }));
+      }, child: GetX<TotalController>(
+        builder: (controller) {
+          return Card(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(outPadding),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(
+                        "${problemIndex + 1}번 문제",
+                        style: problem.isSolved.value
+                            ? const TextStyle(color: Colors.grey)
+                            : TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer),
+                      ),
                     ),
                   ),
-                ),
-                GetX<TotalController>(builder: (controller) {
-                  return Text(
+                  Text(
                     "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
                     style: problem.isSolved.value
                         ? const TextStyle(color: Colors.grey)
@@ -60,13 +59,13 @@ class ProblemList extends StatelessWidget {
                                 .colorScheme
                                 .onPrimaryContainer,
                             fontSize: 14),
-                  );
-                }),
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-      );
+          );
+        },
+      ));
     }).toList();
   }
 
