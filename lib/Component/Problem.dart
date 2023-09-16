@@ -5,4 +5,5 @@ class Problem {
   int seconds = 0;
   bool isSolved = false;
   List<dynamic> questions;
+  List<dynamic> drawingList = [];
 }

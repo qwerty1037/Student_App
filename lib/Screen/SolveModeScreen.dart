@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -11,7 +12,13 @@ import 'package:student_app/Component/ProblemTimer.dart';
 import 'package:student_app/Controller/SolveModeController.dart';
 
 class SolveScreen extends StatelessWidget {
-  const SolveScreen({super.key});
+  SolveScreen({super.key});
+  final drawingController = DrawingController(
+    config: DrawConfig(
+      color: Colors.black,
+      contentType: SimpleLine,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +94,7 @@ class SolveScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: DrawingBoard(
-                          controller: DrawingController(
-                            config: DrawConfig(
-                              color: Colors.black,
-                              contentType: SimpleLine,
-                            ),
-                          ),
+                          controller: drawingController,
                           background: Container(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.7,
@@ -105,6 +107,45 @@ class SolveScreen extends StatelessWidget {
                       _buildProblem(
                         controller.problems[controller.index.value],
                         context,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          controller.problems[controller.index.value]
+                              .drawingList = drawingController.getJsonList();
+                          debugPrint(
+                              "${controller.problems[controller.index.value].drawingList}");
+                        },
+                        child: Text("저장하기"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          controller
+                              .problems[controller.index.value].drawingList
+                              .forEach((element) {
+                            switch (element['type']) {
+                              case 'SimpleLine':
+                                drawingController
+                                    .addContent(SimpleLine.fromJson(element));
+                              case 'SmoothLine':
+                                drawingController
+                                    .addContent(SmoothLine.fromJson(element));
+                              case 'StraightLine':
+                                drawingController
+                                    .addContent(StraightLine.fromJson(element));
+                              case 'Circle':
+                                drawingController
+                                    .addContent(Circle.fromJson(element));
+                              case 'Eraser':
+                                drawingController
+                                    .addContent(Eraser.fromJson(element));
+                            }
+                          });
+                        },
+                        child: Text("불러오기"),
                       ),
                     ],
                   ),
