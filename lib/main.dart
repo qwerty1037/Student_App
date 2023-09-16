@@ -5,7 +5,6 @@ import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
-import 'Trash/StopWatch/StopwatchModel.dart';
 
 void main() {
   Get.put(ThemeController());
@@ -30,7 +29,8 @@ class MyApp extends StatelessWidget {
             seedColor: themeController.seedColor,
           ),
           // textTheme:
-          //     GoogleFonts.notoSansNKoTextTheme(Theme.of(context).textTheme),
+          // GoogleFonts.notoSansNKoTextTheme(Theme.of(context).textTheme),
+
           useMaterial3: true,
         ),
         home: const HomeScreen(),

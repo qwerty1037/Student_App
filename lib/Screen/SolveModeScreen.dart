@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
@@ -72,8 +69,7 @@ class SolveScreen extends StatelessWidget {
                               width: MediaQuery.of(context).size.width / 5,
                               child: ProblemTimer(
                                 key: Key(controller.index.value.toString()),
-                                problem:
-                                    controller.problems[controller.index.value],
+                                problem: controller.problems[controller.index.value],
                               ),
                             ),
                           ),
@@ -129,8 +125,7 @@ class SolveScreen extends StatelessWidget {
                               ),
                               background: Container(
                                 width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.7,
+                                height: MediaQuery.of(context).size.height * 0.7,
                                 color: Colors.white,
                               ),
                               showDefaultActions: false,
@@ -144,26 +139,20 @@ class SolveScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   //저장 버튼
                   Visibility(
-                    visible:
-                        controller.problems[controller.index.value].isSolved ==
-                            false,
+                    visible: controller.problems[controller.index.value].isSolved == false,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved =
-                            true;
+                        controller.problems[controller.index.value].isSolved = true;
                         controller.incrementIndex(context);
                       },
                       child: const Text("풀이 완료하기"),
                     ),
                   ),
                   Visibility(
-                    visible:
-                        controller.problems[controller.index.value].isSolved ==
-                            true,
+                    visible: controller.problems[controller.index.value].isSolved == true,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved =
-                            false;
+                        controller.problems[controller.index.value].isSolved = false;
                       },
                       child: const Text("풀이 수정하기"),
                     ),

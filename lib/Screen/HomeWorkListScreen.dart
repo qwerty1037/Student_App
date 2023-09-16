@@ -12,9 +12,6 @@ class HomeWorkListScreen extends StatelessWidget {
   const HomeWorkListScreen({super.key});
 
   List<GestureDetector> _buildHomeWork(BuildContext context) {
-    //로컬 스토리지에서 homework 정보 불러오기
-    // LocalStorage("User").setItem("HomeWork", ExampleHomeWork); //삭제할 부분, 테스트를 위해 사용중
-
     List<HomeWork> HomeWorks = Get.find<TotalController>().HomeWorks;
     if (HomeWorks.isEmpty) {
       return const <GestureDetector>[];
