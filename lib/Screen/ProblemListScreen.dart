@@ -10,12 +10,8 @@ import 'package:student_app/Screen/SolveModeScreen.dart';
 class ProblemList extends StatelessWidget {
   ProblemList({super.key});
   int homeWorkIndex = Get.arguments["HomeWorkIndex"];
-  List<Problem> problems = Get.find<TotalController>()
-      .HomeWorks[Get.arguments["HomeWorkIndex"]]
-      .problems;
-  String title = Get.find<TotalController>()
-      .HomeWorks[Get.arguments["HomeWorkIndex"]]
-      .title;
+  List<Problem> problems = Get.find<TotalController>().HomeWorks[Get.arguments["HomeWorkIndex"]].problems;
+  String title = Get.find<TotalController>().HomeWorks[Get.arguments["HomeWorkIndex"]].title;
 
   List<GestureDetector> _buildProblems(BuildContext context) {
     if (problems.isEmpty) {
@@ -26,7 +22,7 @@ class ProblemList extends StatelessWidget {
       int problemIndex = problems.indexOf(problem);
       return GestureDetector(onTap: () {
         Get.to(() => SolveScreen(), binding: BindingsBuilder(() {
-          Get.put(SolveModeController(problems.indexOf(problem), problems));
+          Get.put(SolveModeController(problems.indexOf(problem), problems, homeWorkIndex));
         }));
       }, child: GetX<TotalController>(
         builder: (controller) {
@@ -41,12 +37,8 @@ class ProblemList extends StatelessWidget {
                     child: FittedBox(
                       child: Text(
                         "${problemIndex + 1}번 문제",
-                        style: problem.isSolved.value
-                            ? const TextStyle(color: Colors.grey)
-                            : TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer),
+                        style:
+                            problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                       ),
                     ),
                   ),
@@ -54,11 +46,7 @@ class ProblemList extends StatelessWidget {
                     "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
                     style: problem.isSolved.value
                         ? const TextStyle(color: Colors.grey)
-                        : TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                            fontSize: 14),
+                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
                   ),
                 ],
               ),
@@ -82,8 +70,7 @@ class ProblemList extends StatelessWidget {
             title: Center(
               child: Text(
                 title,
-                style:
-                    TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
             backgroundColor: Colors.transparent,

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:student_app/Component/Problem.dart';
 
 class HomeWork {
@@ -7,5 +8,17 @@ class HomeWork {
   List<Problem> problems = [];
   DateTime deadLine;
   String teacherName;
-  bool isFinish = false;
+  RxBool isFinish = false.obs;
+
+  void checkFinished() {
+    bool temp = true;
+    problems.forEach((element) {
+      if (element.isSolved.value == false) {
+        temp = false;
+      }
+    });
+    if (temp == true) {
+      isFinish.value = true;
+    }
+  }
 }
