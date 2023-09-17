@@ -22,30 +22,37 @@ class HomeWorkListScreen extends StatelessWidget {
         onTap: () {
           Get.to(() => ProblemList(), arguments: {"HomeWorkIndex": HomeWorks.indexOf(HomeWork)});
         },
-        child: Card(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: const EdgeInsets.all(outPadding),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: FittedBox(
-                    child: Text(
-                      HomeWork.title,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+        child: GetX<TotalController>(
+          builder: (controller) => Card(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(outPadding),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(
+                        HomeWork.title,
+                        style:
+                            HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  "${HomeWork.teacherName} 선생님",
-                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
-                ),
-                Text(
-                  "${HomeWork.deadLine.month}월 ${HomeWork.deadLine.day}일",
-                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 10),
-                )
-              ],
+                  Text(
+                    "${HomeWork.teacherName} 선생님",
+                    style: HomeWork.isFinish.value
+                        ? const TextStyle(color: Colors.grey)
+                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                  ),
+                  Text(
+                    "${HomeWork.deadLine.month}월 ${HomeWork.deadLine.day}일",
+                    style: HomeWork.isFinish.value
+                        ? const TextStyle(color: Colors.grey)
+                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -84,9 +91,9 @@ class HomeWorkListScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: 1,
             padding: const EdgeInsets.all(outPadding),
-            childAspectRatio: 1.0,
+            childAspectRatio: 10,
             children: _buildHomeWork(context),
           ),
         ),

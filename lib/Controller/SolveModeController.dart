@@ -5,6 +5,7 @@ import 'package:student_app/Component/Problem.dart';
 class SolveModeController extends GetxController {
   RxInt index = 0.obs;
   List<Problem> problems = [];
+  int homeWorkIndex = 0;
   RxBool refreshTimer = false.obs;
 
   void restartTimer() {
@@ -22,9 +23,10 @@ class SolveModeController extends GetxController {
     content: Center(child: Text('마지막 문제입니다')),
   );
 
-  SolveModeController(int _index, List<Problem> _problems) {
+  SolveModeController(int _index, List<Problem> _problems, int _homeWorkIndex) {
     index.value = _index;
     problems = _problems;
+    homeWorkIndex = _homeWorkIndex;
   }
 
   void incrementIndex(BuildContext context) {
