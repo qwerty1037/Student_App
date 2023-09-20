@@ -8,15 +8,16 @@ class HomeWork {
   List<Problem> problems = [];
   DateTime deadLine;
   String teacherName;
+
   RxBool isFinish = false.obs;
 
   void checkFinished() {
     bool temp = true;
-    problems.forEach((element) {
-      if (element.isSolved.value == false) {
+    for (var element in problems) {
+      if (element.isSolved == false) {
         temp = false;
       }
-    });
+    }
     if (temp == true) {
       isFinish.value = true;
     }

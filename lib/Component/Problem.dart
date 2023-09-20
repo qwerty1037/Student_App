@@ -8,7 +8,9 @@ class Problem {
 
   int minutes = 0;
   int seconds = 0;
+
   RxBool isSolved = false.obs;
+  // RxBool isSolved = false.obs;
   List<dynamic> questions;
   final problemDrawingController = DrawingController(
     config: DrawConfig(
@@ -31,7 +33,7 @@ class Problem {
   }
 
   void load() {
-    problemDrawingList.forEach((element) {
+    for (var element in problemDrawingList) {
       switch (element['type']) {
         case 'SimpleLine':
           problemDrawingController.addContent(SimpleLine.fromJson(element));
@@ -44,8 +46,8 @@ class Problem {
         case 'Eraser':
           problemDrawingController.addContent(Eraser.fromJson(element));
       }
-    });
-    answerDrawingList.forEach((element) {
+    }
+    for (var element in answerDrawingList) {
       switch (element['type']) {
         case 'SimpleLine':
           answerDrawingController.addContent(SimpleLine.fromJson(element));
@@ -58,6 +60,6 @@ class Problem {
         case 'Eraser':
           answerDrawingController.addContent(Eraser.fromJson(element));
       }
-    });
+    }
   }
 }

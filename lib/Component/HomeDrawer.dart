@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
 import 'package:student_app/Screen/HomeWorkListScreen.dart';
 import 'package:student_app/Screen/ProblemListScreen.dart';
@@ -38,24 +39,26 @@ class HomeDrawer extends StatelessWidget {
               leading: const Icon(Icons.home_outlined),
               title: const Text('홈'),
               onTap: () {
-                Get.to(() => const HomeScreen());
+                Get.off(() => HomeScreen(), binding: BindingsBuilder(() {
+                  Get.put<TotalController>(TotalController());
+                }));
               },
             ),
             ListTile(
-              leading: const Icon(Icons.home_outlined),
+              leading: const Icon(Icons.edit_outlined),
               title: const Text('과제'),
               onTap: () {
                 Get.to(() => const HomeWorkListScreen());
               },
             ),
             ListTile(
-              leading: const Icon(Icons.home_outlined),
+              leading: const Icon(Icons.done_outline),
               title: const Text('오답노트'),
               onTap: () {},
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.home_outlined),
+              leading: const Icon(Icons.settings_outlined),
               title: const Text('설정'),
               onTap: () {
                 Get.to(() => SettingScreen());

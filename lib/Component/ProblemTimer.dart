@@ -23,7 +23,7 @@ class ProblemTimerState extends State<ProblemTimer> {
   void initState() {
     debugPrint("initiate timer");
     super.initState();
-    if (widget.problem.isSolved.value == false) {
+    if (widget.problem.isSolved == false) {
       startTimer();
       isActive = true;
     }
@@ -32,7 +32,7 @@ class ProblemTimerState extends State<ProblemTimer> {
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(oneSec, (timer) {
-      if (widget.problem.isSolved.value == true) {
+      if (widget.problem.isSolved == true) {
         setState(() {
           timer.cancel();
         });

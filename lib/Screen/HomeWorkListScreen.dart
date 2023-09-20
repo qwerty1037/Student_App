@@ -27,29 +27,24 @@ class HomeWorkListScreen extends StatelessWidget {
             color: Theme.of(context).colorScheme.primaryContainer,
             clipBehavior: Clip.antiAlias,
             child: Padding(
-              padding: const EdgeInsets.all(outPadding),
+              padding: const EdgeInsets.all(cardPadding),
               child: Column(
                 children: <Widget>[
                   Expanded(
                     child: FittedBox(
                       child: Text(
                         HomeWork.title,
-                        style:
-                            HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                        style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                       ),
                     ),
                   ),
                   Text(
                     "${HomeWork.teacherName} 선생님",
-                    style: HomeWork.isFinish.value
-                        ? const TextStyle(color: Colors.grey)
-                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                    style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
                   ),
                   Text(
                     "${HomeWork.deadLine.month}월 ${HomeWork.deadLine.day}일",
-                    style: HomeWork.isFinish.value
-                        ? const TextStyle(color: Colors.grey)
-                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                    style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
                   )
                 ],
               ),
@@ -91,9 +86,9 @@ class HomeWorkListScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: GridView.count(
-            crossAxisCount: 1,
+            crossAxisCount: 2,
             padding: const EdgeInsets.all(outPadding),
-            childAspectRatio: 10,
+            childAspectRatio: 1.0,
             children: _buildHomeWork(context),
           ),
         ),

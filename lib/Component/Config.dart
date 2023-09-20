@@ -1,7 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const double outPadding = 2.0;
-const String HOST = 'ec2-3-36-65-242.ap-northeast-2.compute.amazonaws.com:3000';
+const double outPadding = 10.0;
+const double cardPadding = 5.0;
+const String HOST = 'ec2-3-36-65-242.ap-northeast-2.compute.amazonaws.com';
 
 //118.36.177.117 스터디라운지
 //175.124.93.223 원격연결

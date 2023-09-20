@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:student_app/Component/LifeCycle.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
@@ -8,10 +10,17 @@ import 'package:student_app/Screen/LogInScreen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appLifecycleObserver = AppLifecycleObserver();
+  WidgetsBinding.instance.addObserver(appLifecycleObserver);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   KakaoSdk.init(nativeAppKey: "3dc3a9ef5fd5367f85038b1332c85545");
 
   Get.put(ThemeController());
-  Get.put(TotalController());
+
   Get.put(SettingController());
   runApp(MyApp());
 }

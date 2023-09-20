@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:student_app/Screen/LoginScreen.dart';
 import 'package:student_app/Screen/ThemeColorScreen.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -15,25 +17,18 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Setting"),
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: const Text(
+          "Setting",
+        ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: Obx(
-        () => SettingsList(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: SettingsList(
           sections: [
             SettingsSection(
-              title: "내 알림",
-              tiles: [
-                SettingsTile.switchTile(
-                  title: "과제 알림",
-                  subtitle: "과제가 나왔을 때 푸시 알림을 받으세요.",
-                  onToggle: (bool value) {},
-                  switchValue: settingController.taskPushAlert,
-                ),
-              ],
-            ),
-            SettingsSection(
-              title: 'Theme',
+              title: '테마',
               tiles: [
                 SettingsTile(
                   title: 'Theme Color',
@@ -49,7 +44,7 @@ class SettingScreen extends StatelessWidget {
                     9 => 'Indigo',
                     _ => 'error',
                   },
-                  leading: const Icon(Icons.pallet),
+                  leading: const Icon(Icons.palette),
                   onPressed: (BuildContext context) {
                     Get.to(() => ThemeColorSelectScreen());
                   },
@@ -57,11 +52,32 @@ class SettingScreen extends StatelessWidget {
                 // SettingsTile
                 SettingsTile.switchTile(
                   title: 'Darkmode',
-                  leading: const Icon(Icons.fingerprint),
+                  leading: const Icon(Icons.dark_mode),
                   switchValue: themeController.isDark.value,
                   onToggle: (bool value) {
                     themeController.isDark.value = value;
                     LocalStorage("User").setItem("isDark", value);
+                  },
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: '계정',
+              tiles: [
+                SettingsTile.switchTile(
+                  title: "과제 알림",
+                  subtitle: "과제가 나왔을 때 푸시 알림을 받으세요.",
+                  onToggle: (bool value) {},
+                  switchValue: settingController.taskPushAlert,
+                ),
+                SettingsTile(
+                  title: '로그아웃',
+                  leading: const Icon(Icons.logout),
+                  onPressed: (BuildContext context) async {
+                    var storage = const FlutterSecureStorage();
+                    await storage.delete(key: 'id');
+                    await storage.delete(key: 'password');
+                    Get.offAll(() => LoginScreen());
                   },
                 ),
               ],

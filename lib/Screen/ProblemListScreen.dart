@@ -21,7 +21,7 @@ class ProblemList extends StatelessWidget {
     return problems.map((problem) {
       int problemIndex = problems.indexOf(problem);
       return GestureDetector(onTap: () {
-        Get.to(() => SolveScreen(), binding: BindingsBuilder(() {
+        Get.to(() => const SolveScreen(), binding: BindingsBuilder(() {
           Get.put(SolveModeController(problems.indexOf(problem), problems, homeWorkIndex));
         }));
       }, child: GetX<TotalController>(
@@ -37,16 +37,13 @@ class ProblemList extends StatelessWidget {
                     child: FittedBox(
                       child: Text(
                         "${problemIndex + 1}번 문제",
-                        style:
-                            problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                        style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                       ),
                     ),
                   ),
                   Text(
                     "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
-                    style: problem.isSolved.value
-                        ? const TextStyle(color: Colors.grey)
-                        : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                    style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
                   ),
                 ],
               ),
@@ -80,7 +77,7 @@ class ProblemList extends StatelessWidget {
             child: GridView.count(
               crossAxisCount: 1,
               padding: const EdgeInsets.all(outPadding),
-              childAspectRatio: 10,
+              childAspectRatio: 5,
               children: _buildProblems(context),
             ),
           ),

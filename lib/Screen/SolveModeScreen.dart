@@ -1,7 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
@@ -13,7 +9,7 @@ import 'package:student_app/Controller/SolveModeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
 
 class SolveScreen extends StatelessWidget {
-  SolveScreen({super.key});
+  const SolveScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +162,7 @@ class SolveScreen extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: controller.problems[controller.index.value].isSolved.value == true,
+                    visible: controller.problems[controller.index.value].isSolved == true,
                     child: ElevatedButton(
                       onPressed: () {
                         controller.problems[controller.index.value].isSolved.value = false;

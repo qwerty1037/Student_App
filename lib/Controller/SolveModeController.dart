@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Problem.dart';
+import 'package:student_app/Controller/TotalController.dart';
 
 class SolveModeController extends GetxController {
   RxInt index = 0.obs;
