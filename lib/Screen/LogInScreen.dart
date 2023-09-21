@@ -9,14 +9,15 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   LoginScreenController loginScreenController = Get.put(LoginScreenController());
+  DateTime? currentBackPressTime;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         DateTime now = DateTime.now();
-        DateTime? currentBackPressTime;
-        if (currentBackPressTime == null || now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
+
+        if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
           currentBackPressTime = now;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -25,9 +26,9 @@ class LoginScreen extends StatelessWidget {
           );
 
           return Future.value(false);
+        } else {
+          return Future.value(true);
         }
-
-        return Future.value(true);
       },
       child: Stack(children: [
         Container(
