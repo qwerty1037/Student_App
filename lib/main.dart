@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/LifeCycle.dart';
+import 'package:student_app/Component/Notification.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
@@ -18,7 +19,7 @@ void main() async {
   ]);
 
   KakaoSdk.init(nativeAppKey: "3dc3a9ef5fd5367f85038b1332c85545");
-
+  await FlutterLocalNotification.init();
   Get.put(ThemeController());
 
   Get.put(SettingController());

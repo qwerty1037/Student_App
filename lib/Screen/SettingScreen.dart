@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:student_app/Component/Notification.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/ThemeController.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -69,6 +70,13 @@ class SettingScreen extends StatelessWidget {
                   subtitle: "과제가 나왔을 때 푸시 알림을 받으세요.",
                   onToggle: (bool value) {},
                   switchValue: settingController.taskPushAlert,
+                ),
+                SettingsTile(
+                  title: "알림 테스트",
+                  onPressed: (BuildContext context) {
+                    FlutterLocalNotification.requestNotificationPermission();
+                    FlutterLocalNotification.showNotification();
+                  },
                 ),
                 SettingsTile(
                   title: '로그아웃',
