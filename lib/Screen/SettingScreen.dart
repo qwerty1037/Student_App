@@ -77,7 +77,6 @@ class SettingScreen extends StatelessWidget {
                 SettingsTile(
                   title: "알림 테스트",
                   onPressed: (BuildContext context) {
-                    FlutterLocalNotification.requestNotificationPermission();
                     FlutterLocalNotification.showNotification();
                   },
                 ),

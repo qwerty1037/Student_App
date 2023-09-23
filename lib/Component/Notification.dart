@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FlutterLocalNotification {
@@ -21,6 +22,7 @@ class FlutterLocalNotification {
       android: androidInitializationSettings,
       iOS: iosInitializationSettings,
     );
+    debugPrint("intiialize");
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
