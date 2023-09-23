@@ -19,10 +19,10 @@ void main() async {
   ]);
 
   KakaoSdk.init(nativeAppKey: "3dc3a9ef5fd5367f85038b1332c85545");
-  await FlutterLocalNotification.init();
   Get.put(ThemeController());
 
   Get.put(SettingController());
+  await FlutterLocalNotification.init();
   runApp(MyApp());
 }
 
@@ -32,6 +32,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Obx(() => GetMaterialApp(
         title: 'Student App',
         theme: ThemeData(

@@ -74,7 +74,6 @@ class SettingScreen extends StatelessWidget {
                 SettingsTile(
                   title: "알림 테스트",
                   onPressed: (BuildContext context) {
-                    FlutterLocalNotification.requestNotificationPermission();
                     FlutterLocalNotification.showNotification();
                   },
                 ),
@@ -104,7 +103,8 @@ class SettingScreen extends StatelessWidget {
         onTap: () {
           themeController.seedColorIndex = kThemeSeedColors.indexOf(color);
           Get.changeTheme(ThemeData.light().copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: themeController.seedColor),
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: themeController.seedColor),
             useMaterial3: true,
           ));
         },
