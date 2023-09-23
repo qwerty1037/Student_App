@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/SerializedXFile.dart';
+import 'package:student_app/Controller/SolveAnswerNoteController.dart';
+import 'package:student_app/Controller/SolveModeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
+import 'package:student_app/Screen/SolveAnswerNoteScreen.dart';
 
 class AnswerNote extends StatelessWidget {
   AnswerNote({super.key});
@@ -29,18 +32,18 @@ class AnswerNote extends StatelessWidget {
       int answerNoteIndex = answerNotes.indexOf(answerNote);
       return GestureDetector(
           onTap: () {
-            //코드 추가할 부분
+            Get.to(() => const SolveAnswerNote(), binding: BindingsBuilder(() {
+              Get.put(SolveAnswerNoteController(answerNoteIndex, answerNotes, context));
+            }));
           },
           child: Card(
             color: Theme.of(context).colorScheme.primaryContainer,
             clipBehavior: Clip.antiAlias,
             child: Padding(
               padding: const EdgeInsets.all(outPadding),
-              child: Expanded(
-                child: FittedBox(
-                  child: Text(
-                    "${answerNoteIndex + 1}번 문제",
-                  ),
+              child: FittedBox(
+                child: Text(
+                  "${answerNoteIndex + 1}번 문제",
                 ),
               ),
             ),

@@ -31,20 +31,51 @@ class ProblemList extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: Padding(
               padding: const EdgeInsets.all(outPadding),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: FittedBox(
-                      child: Text(
-                        "${problemIndex + 1}번 문제",
-                        style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
-                      ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: FittedBox(
+                            child: Text(
+                              "${problemIndex + 1}번 문제",
+                              style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
+                          style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    "걸린 시간 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].minutes}분 ${controller.HomeWorks[homeWorkIndex].problems[problemIndex].seconds}초",
-                    style: problem.isSolved.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
-                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        onPressed: () {
+                          if (!problem.answerNote) {
+                            controller.answerNote.add(problem.questions);
+                            problem.answerNote = true;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Center(child: Text("오답노트에 저장되었습니다")),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Center(child: Text("이미 오답노트에 저장된 문제입니다")),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "저장",
+                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                        )),
+                  )
                 ],
               ),
             ),
@@ -71,14 +102,6 @@ class ProblemList extends StatelessWidget {
             ),
             backgroundColor: Colors.transparent,
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
-            actions: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "오답노트 추가",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ))
-            ],
           ),
           body: SafeArea(
             child: GridView.count(
