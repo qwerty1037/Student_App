@@ -4,10 +4,11 @@ import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:get/get.dart';
 
 class Problem {
-  Problem({required this.questions, this.minutes = 0, this.seconds = 0});
+  Problem({required this.questions, this.minutes = 0, this.seconds = 0, this.answerNote = false});
 
   int minutes;
   int seconds;
+  bool answerNote;
 
   RxBool isSolved = false.obs;
   // RxBool isSolved = false.obs;
@@ -67,6 +68,7 @@ class Problem {
     return {
       'minutes': minutes,
       'seconds': seconds,
+      'answerNote': answerNote,
       'isSolved': isSolved.value,
       'questions': questions,
       'problemDrawingList': problemDrawingList,
@@ -78,9 +80,10 @@ class Problem {
     return Problem(
       minutes: json['minutes'],
       seconds: json['seconds'],
+      answerNote: json['answerNote'],
       questions: json['questions'],
     )
-      ..isSolved.value = json['isSolved'] ?? false
+      ..isSolved.value = json['isSolved']
       ..problemDrawingList = json['problemDrawingList']
       ..answerDrawingList = json['answerDrawingList'];
   }

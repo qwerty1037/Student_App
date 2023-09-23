@@ -75,11 +75,10 @@ class HomeWorkListScreen extends StatelessWidget {
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Center(
-            child: Text(
-              "과제",
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            ),
+          centerTitle: true,
+          title: Text(
+            "과제",
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
           backgroundColor: Colors.transparent,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,

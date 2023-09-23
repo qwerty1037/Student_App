@@ -4,6 +4,7 @@ import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/HomeDrawer.dart';
 import 'package:student_app/Component/HomeNavigator.dart';
 import 'package:student_app/Controller/TotalController.dart';
+import 'package:student_app/Screen/AnswerNoteScreen.dart';
 import 'package:student_app/Screen/HomeWorkListScreen.dart';
 import 'package:student_app/Screen/SettingScreen.dart';
 // import 'package:student_app/test/SettingScreen.dart';
@@ -145,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                               flex: 2,
                               child: HomeNavigator(
                                 onPressed: () {
-                                  debugPrint("오답노트 클릭");
+                                  Get.to(() => AnswerNote());
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

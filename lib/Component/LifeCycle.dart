@@ -11,8 +11,8 @@ class AppLifecycleObserver with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.paused) {
       var id = await const FlutterSecureStorage().read(key: "id");
-
       await LocalStorage(id!).setItem("HomeWork", Get.find<TotalController>().HomeWorks.value);
+      await LocalStorage(id).setItem("AnswerNote", Get.find<TotalController>().answerNote.value);
     }
   }
 }

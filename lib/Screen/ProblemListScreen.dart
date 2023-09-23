@@ -64,14 +64,21 @@ class ProblemList extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Center(
-              child: Text(
-                title,
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-              ),
+            centerTitle: true,
+            title: Text(
+              title,
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
             ),
             backgroundColor: Colors.transparent,
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            actions: [
+              TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "오답노트 추가",
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  ))
+            ],
           ),
           body: SafeArea(
             child: GridView.count(

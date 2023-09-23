@@ -13,6 +13,7 @@ import 'package:student_app/Controller/LoginScreenController.dart';
 
 class TotalController extends GetxController {
   RxList<HomeWork> HomeWorks = ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
+  RxList<dynamic> answerNote = [].obs;
   late Timer _timer;
   String? id;
   RxInt unsolvedRemained = 0.obs;
@@ -26,6 +27,9 @@ class TotalController extends GetxController {
 
     if (LocalStorage(id!).getItem("HomeWork") != null) {
       HomeWorks.value = LocalStorage(id!).getItem("HomeWork");
+    }
+    if (LocalStorage(id!).getItem("AnswerNote") != null) {
+      answerNote.value = LocalStorage(id!).getItem("AnswerNote");
     }
     DateTime now = DateTime.now();
     for (var element in HomeWorks) {
