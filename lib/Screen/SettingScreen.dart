@@ -1,17 +1,19 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Component/Notification.dart';
-import 'package:student_app/Controller/SettingController.dart';
-import 'package:student_app/Controller/ThemeController.dart';
+
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Screen/LoginScreen.dart';
 import 'package:student_app/Screen/ThemeColorScreen.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
-  final themeController = Get.find<ThemeController>();
+
   final settingController = Get.find<SettingController>();
 
   @override
@@ -33,7 +35,7 @@ class SettingScreen extends StatelessWidget {
               tiles: [
                 SettingsTile(
                   title: 'Theme Color',
-                  subtitle: switch (themeController.seedColorIndex + 1) {
+                  subtitle: switch (settingController.seedColorIndex + 1) {
                     1 => 'Cyan',
                     2 => 'Blue',
                     3 => 'Purple',
@@ -46,7 +48,7 @@ class SettingScreen extends StatelessWidget {
                     _ => 'error',
                   },
                   leading: const Icon(Icons.palette),
-                  onPressed: (BuildContext context) {
+                  onPressed: (BuildContext context) async {
                     Get.to(() => ThemeColorSelectScreen());
                   },
                 ),
@@ -54,10 +56,11 @@ class SettingScreen extends StatelessWidget {
                 SettingsTile.switchTile(
                   title: 'Darkmode',
                   leading: const Icon(Icons.dark_mode),
-                  switchValue: themeController.isDark.value,
+                  switchValue: settingController.isDark.value,
                   onToggle: (bool value) {
-                    themeController.isDark.value = value;
-                    LocalStorage("User").setItem("isDark", value);
+                    settingController.isDark.value = value;
+
+                    LocalStorage("Setting").setItem("isDark", value);
                   },
                 ),
               ],
@@ -85,7 +88,8 @@ class SettingScreen extends StatelessWidget {
                     var storage = const FlutterSecureStorage();
                     await storage.delete(key: 'id');
                     await storage.delete(key: 'password');
-                    Get.offAll(() => LoginScreen());
+
+                    settingController.isLoginSuccess.value = false;
                   },
                 ),
               ],
@@ -97,14 +101,14 @@ class SettingScreen extends StatelessWidget {
   }
 
   static Widget _buildSeedColorButton(Color color, BuildContext context) {
-    final themeController = Get.find<ThemeController>();
+    final settingController = Get.find<SettingController>();
 
     return Obx(
       () => GestureDetector(
         onTap: () {
-          themeController.seedColorIndex = kThemeSeedColors.indexOf(color);
+          settingController.seedColorIndex = kThemeSeedColors.indexOf(color);
           Get.changeTheme(ThemeData.light().copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: themeController.seedColor),
+            colorScheme: ColorScheme.fromSeed(seedColor: settingController.seedColor),
             useMaterial3: true,
           ));
         },
@@ -113,7 +117,7 @@ class SettingScreen extends StatelessWidget {
           child: CircleAvatar(
             radius: 16,
             backgroundColor: color,
-            child: themeController.seedColor == color
+            child: settingController.seedColor == color
                 ? const Icon(
                     Icons.check,
                     size: 16.0,

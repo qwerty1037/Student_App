@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:http/http.dart' as http;
 import 'package:student_app/Component/Cookie.dart';
+import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
 
@@ -70,9 +71,7 @@ class LoginScreenController extends GetxController {
   }
 
   void loginSuccess() {
-    Get.off(() => HomeScreen(), binding: BindingsBuilder(() {
-      Get.put<TotalController>(TotalController());
-    }));
+    Get.find<SettingController>().isLoginSuccess.value = true;
     Get.delete<LoginScreenController>();
   }
 }

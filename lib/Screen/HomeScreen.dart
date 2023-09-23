@@ -11,6 +11,7 @@ import 'package:student_app/Screen/SettingScreen.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   DateTime? currentBackPressTime;
+  TotalController totalController = Get.put<TotalController>(TotalController());
 
   @override
   Widget build(BuildContext context) {

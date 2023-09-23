@@ -4,10 +4,10 @@ import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:get/get.dart';
 
 class Problem {
-  Problem({required this.questions});
+  Problem({required this.questions, this.minutes = 0, this.seconds = 0});
 
-  int minutes = 0;
-  int seconds = 0;
+  int minutes;
+  int seconds;
 
   RxBool isSolved = false.obs;
   // RxBool isSolved = false.obs;
@@ -61,5 +61,27 @@ class Problem {
           answerDrawingController.addContent(Eraser.fromJson(element));
       }
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'minutes': minutes,
+      'seconds': seconds,
+      'isSolved': isSolved.value,
+      'questions': questions,
+      'problemDrawingList': problemDrawingList,
+      'answerDrawingList': answerDrawingList,
+    };
+  }
+
+  factory Problem.fromJson(Map<String, dynamic> json) {
+    return Problem(
+      minutes: json['minutes'],
+      seconds: json['seconds'],
+      questions: json['questions'],
+    )
+      ..isSolved.value = json['isSolved'] ?? false
+      ..problemDrawingList = json['problemDrawingList']
+      ..answerDrawingList = json['answerDrawingList'];
   }
 }

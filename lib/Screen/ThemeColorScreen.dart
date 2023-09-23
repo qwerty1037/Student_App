@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:student_app/Controller/ThemeController.dart';
+import 'package:student_app/Controller/SettingController.dart';
 
 class ThemeColorSelectScreen extends StatelessWidget {
   ThemeColorSelectScreen({super.key});
-  final themeController = Get.find<ThemeController>();
+  final themeController = Get.find<SettingController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Languages'),
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: const Text('색깔'),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Obx(
@@ -107,13 +108,11 @@ class ThemeColorSelectScreen extends StatelessWidget {
   }
 
   Widget trailingWidget(int index) {
-    return (themeController.seedColorIndex == index)
-        ? const Icon(Icons.check, color: Colors.blue)
-        : const Icon(null);
+    return (themeController.seedColorIndex == index) ? const Icon(Icons.check, color: Colors.blue) : const Icon(null);
   }
 
   void changeThemeColor(int index) {
     themeController.seedColorIndex = index;
-    LocalStorage("User").setItem("seedColor", index);
+    LocalStorage("Setting").setItem("seedColor", index);
   }
 }

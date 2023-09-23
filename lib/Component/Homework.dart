@@ -22,4 +22,28 @@ class HomeWork {
       isFinish.value = true;
     }
   }
+
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> problemListJson = problems.map((problem) => problem.toJson()).toList();
+    return {
+      'title': title,
+      'problems': problemListJson,
+      'deadLine': deadLine.toIso8601String(),
+      'teacherName': teacherName,
+      'isFinish': isFinish.value,
+    };
+  }
+
+  // Map을 HomeWork 객체로 역직렬화
+  factory HomeWork.fromJson(Map<String, dynamic> json) {
+    List<Map<String, dynamic>> problemListJson = json['problems'];
+    List<Problem> problems = problemListJson.map((problemJson) => Problem.fromJson(problemJson)).toList();
+
+    return HomeWork(
+      title: json['title'],
+      problems: problems,
+      deadLine: DateTime.parse(json['deadLine']),
+      teacherName: json['teacherName'],
+    )..isFinish.value = json['isFinish'] ?? false;
+  }
 }
