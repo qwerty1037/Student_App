@@ -50,31 +50,13 @@ class AnswerNote extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: Padding(
               padding: const EdgeInsets.all(outPadding),
-              child: Stack(children: [
-                Center(
-                  child: FittedBox(
-                    child: Text(
-                      "${answerNoteIndex + 1}번 문제",
-                    ),
+              child: Center(
+                child: FittedBox(
+                  child: Text(
+                    "${answerNoteIndex + 1}번 문제",
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                      onPressed: () {
-                        Get.find<TotalController>().answerNote.removeAt(answerNoteIndex);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Center(child: Text("오답노트에서 제거되었습니다")),
-                          ),
-                        );
-                        if (answerNote is SerializableProblemImage) {
-                          File(answerNote.path).deleteSync();
-                        }
-                      },
-                      icon: const Icon(Icons.delete)),
-                )
-              ]),
+              ),
             ),
           ));
     }).toList();
