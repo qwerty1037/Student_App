@@ -1,12 +1,16 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_app/Component/Config.dart';
-import 'package:student_app/Component/SerializedXFile.dart';
+import 'package:student_app/Component/SerializedProblemImage.dart';
 import 'package:student_app/Controller/SolveAnswerNoteController.dart';
 import 'package:student_app/Controller/SolveModeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/SolveAnswerNoteScreen.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AnswerNote extends StatelessWidget {
   AnswerNote({super.key});
@@ -14,11 +18,16 @@ class AnswerNote extends StatelessWidget {
 
   Future getImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
-
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
 
     if (pickedFile != null) {
-      var pickedImage = SerializableXFile(pickedFile.path);
+      final appDir = await getApplicationDocumentsDirectory();
+      final imageName = "${DateTime.now()}.jpg";
+      final imagePath = '${appDir.path}/$imageName';
+      final Uint8List imageData = await pickedFile.readAsBytes();
+      File(imagePath).writeAsBytes(imageData);
+
+      var pickedImage = SerializableProblemImage(imagePath);
       totalController.answerNote.add(pickedImage);
     }
   }
@@ -41,11 +50,31 @@ class AnswerNote extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: Padding(
               padding: const EdgeInsets.all(outPadding),
-              child: FittedBox(
-                child: Text(
-                  "${answerNoteIndex + 1}번 문제",
+              child: Stack(children: [
+                Center(
+                  child: FittedBox(
+                    child: Text(
+                      "${answerNoteIndex + 1}번 문제",
+                    ),
+                  ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.find<TotalController>().answerNote.removeAt(answerNoteIndex);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Center(child: Text("오답노트에서 제거되었습니다")),
+                          ),
+                        );
+                        if (answerNote is SerializableProblemImage) {
+                          File(answerNote.path).deleteSync();
+                        }
+                      },
+                      icon: const Icon(Icons.delete)),
+                )
+              ]),
             ),
           ));
     }).toList();
@@ -78,6 +107,14 @@ class AnswerNote extends StatelessWidget {
                   getImage(ImageSource.gallery);
                 },
                 icon: const Icon(Icons.add_photo_alternate)),
+            TextButton(
+                onPressed: () {
+                  Get.find<TotalController>().answerNote.shuffle();
+                },
+                child: Text(
+                  "순서 MIX",
+                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                )),
           ],
         ),
         body: SafeArea(

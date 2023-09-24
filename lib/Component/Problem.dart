@@ -11,7 +11,7 @@ class Problem {
   bool answerNote;
 
   RxBool isSolved = false.obs;
-  // RxBool isSolved = false.obs;
+
   List<dynamic> questions;
   final problemDrawingController = DrawingController(
     config: DrawConfig(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/Problem.dart';
 import 'package:student_app/Component/ProblemTimer.dart';
+import 'package:student_app/Component/SerializedProblemImage.dart';
 import 'package:student_app/Controller/SolveModeController.dart';
 import 'package:student_app/Controller/TotalController.dart';
 
@@ -28,6 +31,11 @@ class SolveScreen extends StatelessWidget {
                   Text(
                     "${controller.index.value + 1}번 문제",
                   ),
+                  ProblemTimer(
+                    key: Key(controller.index.value.toString() + controller.refreshTimer.value.toString()),
+                    problem: controller.problems[controller.index.value],
+                    refresh: controller.refreshTimer.value,
+                  )
                 ],
               ),
             ),
@@ -55,52 +63,32 @@ class SolveScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "문제",
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 5,
-                              child: ProblemTimer(
-                                key: Key(controller.index.value.toString() + controller.refreshTimer.value.toString()),
-                                problem: controller.problems[controller.index.value],
-                                refresh: controller.refreshTimer.value,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                  Container(
+                    color: Colors.white,
+                    child: _buildProblem(
+                      controller.problems[controller.index.value],
+                      context,
                     ),
                   ),
-                  Stack(
-                    children: [
-                      SizedBox(
+                  Container(
+                    color: Colors.black,
+                    width: MediaQuery.of(context).size.width,
+                    height: 1,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: DrawingBoard(
+                      key: Key(controller.index.value.toString()),
+                      controller: controller.problems[controller.index.value].problemDrawingController,
+                      background: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
-                        child: DrawingBoard(
-                          key: Key(controller.index.value.toString()),
-                          controller: controller.problems[controller.index.value].problemDrawingController,
-                          background: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            color: Colors.white,
-                          ),
-                          showDefaultActions: true,
-                          showDefaultTools: true,
-                        ),
+                        color: Colors.white,
                       ),
-                      _buildProblem(
-                        controller.problems[controller.index.value],
-                        context,
-                      ),
-                    ],
+                      showDefaultActions: true,
+                      showDefaultTools: true,
+                    ),
                   ),
                   /*
                   Row(
@@ -136,8 +124,8 @@ class SolveScreen extends StatelessWidget {
                               key: Key(controller.index.value.toString()),
                               controller: controller.problems[controller.index.value].answerDrawingController,
                               background: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height * 0.7,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                height: MediaQuery.of(context).size.height * 0.1,
                                 color: Colors.white,
                               ),
                               showDefaultActions: false,
@@ -146,6 +134,11 @@ class SolveScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      IconButton(
+                          onPressed: () {
+                            controller.problems[controller.index.value].answerDrawingController.clear();
+                          },
+                          icon: const Icon(Icons.delete))
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -188,8 +181,14 @@ class SolveScreen extends StatelessWidget {
           problem.questions[i],
           style: const TextStyle(fontSize: 30),
         ));
+      } else if (problem.questions[i] is SerializableProblemImage) {
+        children.add(Image.file(
+          File(problem.questions[i].path),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.5,
+        ));
       } else {
-        debugPrint("오류");
+        debugPrint("questions이 이미지나 text형태가 아님");
       }
     }
     return Padding(

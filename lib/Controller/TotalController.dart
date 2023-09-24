@@ -70,6 +70,7 @@ class TotalController extends GetxController {
           await saveCookieToSecureStorage(uid!, accessToken, refreshToken!);
         }
       } else if (isHttpRequestFailure(response)) {
+        debugPrint(response.statusCode.toString());
         debugPrint("refresh 토큰 받기 오류 발생(서버연결x)");
       }
     });

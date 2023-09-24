@@ -56,7 +56,7 @@ class ProblemList extends StatelessWidget {
                     child: TextButton(
                         onPressed: () {
                           if (!problem.answerNote) {
-                            controller.answerNote.add(problem.questions);
+                            controller.answerNote.add(problem.questions.toList());
                             problem.answerNote = true;
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
