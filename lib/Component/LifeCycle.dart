@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -11,8 +13,18 @@ class AppLifecycleObserver with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.paused) {
       var id = await const FlutterSecureStorage().read(key: "id");
-      await LocalStorage(id!).setItem("HomeWork", Get.find<TotalController>().HomeWorks.value);
-      await LocalStorage(id).setItem("AnswerNote", Get.find<TotalController>().answerNote.value);
+
+      List<dynamic> homeWorkJsonList = Get.find<TotalController>().HomeWorks.map((homeWork) => homeWork.toJson()).toList();
+      String homeWorkJsonString = jsonEncode(homeWorkJsonList);
+      List<dynamic> AnswerNoteJsonList = Get.find<TotalController>().answerNote.map((answerNote) => answerNote.toJson()).toList();
+      String answerNoteJsonString = jsonEncode(AnswerNoteJsonList);
+
+      await LocalStorage(id!).setItem("HomeWork", homeWorkJsonString);
+      await LocalStorage(id).setItem("AnswerNote", answerNoteJsonString);
+      debugPrint("=======================================");
+      debugPrint("id: $id");
+      debugPrint(LocalStorage(id).getItem("HomeWork").toString());
+      debugPrint(LocalStorage(id).getItem("AnswerNote").toString());
     }
   }
 }

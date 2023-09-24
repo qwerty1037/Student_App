@@ -87,7 +87,7 @@ class SettingScreen extends StatelessWidget {
                     var storage = const FlutterSecureStorage();
                     await storage.delete(key: 'id');
                     await storage.delete(key: 'password');
-
+                    Get.back();
                     settingController.isLoginSuccess.value = false;
                   },
                 ),

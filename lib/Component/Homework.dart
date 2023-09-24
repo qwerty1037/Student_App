@@ -36,7 +36,7 @@ class HomeWork {
 
   // Map을 HomeWork 객체로 역직렬화
   factory HomeWork.fromJson(Map<String, dynamic> json) {
-    List<Map<String, dynamic>> problemListJson = json['problems'];
+    List<dynamic> problemListJson = json['problems'] as List<dynamic>;
     List<Problem> problems = problemListJson.map((problemJson) => Problem.fromJson(problemJson)).toList();
 
     return HomeWork(

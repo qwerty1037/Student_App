@@ -56,7 +56,7 @@ class LoginScreenController extends GetxController {
           await storage.write(key: 'id', value: idController.text);
           await storage.write(key: 'password', value: passwordController.text);
         }
-        loginSuccess();
+        loginSuccess(context);
       }
     }
     if (isHttpRequestFailure(response)) {
@@ -70,7 +70,11 @@ class LoginScreenController extends GetxController {
     }
   }
 
-  void loginSuccess() {
+  void loginSuccess(BuildContext? context) {
+    if (context != null) {
+      FocusScope.of(context).unfocus();
+    }
+
     Get.find<SettingController>().isLoginSuccess.value = true;
     Get.delete<LoginScreenController>();
   }

@@ -13,7 +13,6 @@ import 'package:student_app/Controller/TotalController.dart';
 import 'package:student_app/Screen/HomeScreen.dart';
 import 'package:student_app/Screen/LogInScreen.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:student_app/Test/Login.dart';
 import 'package:student_app/firebase_options.dart';
 
 void main() async {
@@ -42,45 +41,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<SettingController>(
       builder: (controller) {
-        if (controller.isLoginSuccess.value) {
-          return GetMaterialApp(
-            initialBinding: BindingsBuilder(() {
-              Get.put(
-                () => NotificationController(),
-                permanent: true,
-              );
-            }),
-            title: 'Student App',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                brightness: controller.brightness,
-                seedColor: controller.seedColor,
-              ),
-              useMaterial3: true,
+        return GetMaterialApp(
+          initialBinding: BindingsBuilder(() {
+            Get.put(
+              () => NotificationController(),
+              permanent: true,
+            );
+          }),
+          title: 'Student App',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              brightness: controller.brightness,
+              seedColor: controller.seedColor,
             ),
-            debugShowCheckedModeBanner: false,
-            home: HomeScreen(),
-          );
-        } else {
-          return GetMaterialApp(
-            initialBinding: BindingsBuilder(() {
-              Get.put(
-                NotificationController(),
-                permanent: true,
-              );
-            }),
-            title: 'Student App',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                brightness: controller.brightness,
-                seedColor: controller.seedColor,
-              ),
-              useMaterial3: true,
-            ),
-            debugShowCheckedModeBanner: false,
-            home: LoginScreen(),
-          );
-        }
+            useMaterial3: true,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: controller.isLoginSuccess.value ? HomeScreen() : LoginScreen(),
+        );
       },
     );
   }

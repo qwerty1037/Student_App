@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
+import 'package:student_app/Component/HomeWorkToNote.dart';
 import 'package:student_app/Component/Homework.dart';
 import 'package:student_app/Component/Problem.dart';
 import 'package:student_app/Controller/SolveModeController.dart';
@@ -56,7 +57,7 @@ class ProblemList extends StatelessWidget {
                     child: TextButton(
                         onPressed: () {
                           if (!problem.answerNote) {
-                            controller.answerNote.add(problem.questions.toList());
+                            controller.answerNote.add(problemToNote(questions: problem.questions.toList()));
                             problem.answerNote = true;
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

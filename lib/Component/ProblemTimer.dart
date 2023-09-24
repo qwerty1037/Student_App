@@ -63,8 +63,7 @@ class ProblemTimerState extends State<ProblemTimer> {
   Widget build(BuildContext context) {
     return FittedBox(
       child: Text(
-        '시간 ${widget.problem.minutes}:${widget.problem.seconds.toString().padLeft(2, '0')}',
-        style: Theme.of(context).textTheme.bodySmall,
+        '${widget.problem.minutes}:${widget.problem.seconds.toString().padLeft(2, '0')}',
       ),
     );
   }

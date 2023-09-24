@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/HomeDrawer.dart';
@@ -30,6 +31,7 @@ class HomeScreen extends StatelessWidget {
 
           return Future.value(false);
         } else {
+          await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           return Future.value(true);
         }
       },

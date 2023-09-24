@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Config.dart';
 import 'package:student_app/Component/RegisterMember.dart';
@@ -27,6 +28,7 @@ class LoginScreen extends StatelessWidget {
 
           return Future.value(false);
         } else {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           return Future.value(true);
         }
       },
