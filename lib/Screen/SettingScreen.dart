@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:student_app/Component/Download.dart';
 import 'package:student_app/Component/Notification.dart';
 
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -81,6 +82,12 @@ class SettingScreen extends StatelessWidget {
                   },
                 ),
                 SettingsTile(
+                  title: "다운로드 테스트",
+                  onPressed: (BuildContext context) {
+                    Get.to(() => const Downloader());
+                  },
+                ),
+                SettingsTile(
                   title: '로그아웃',
                   leading: const Icon(Icons.logout),
                   onPressed: (BuildContext context) async {
@@ -107,7 +114,8 @@ class SettingScreen extends StatelessWidget {
         onTap: () {
           settingController.seedColorIndex = kThemeSeedColors.indexOf(color);
           Get.changeTheme(ThemeData.light().copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: settingController.seedColor),
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: settingController.seedColor),
             useMaterial3: true,
           ));
         },
