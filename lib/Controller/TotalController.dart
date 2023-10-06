@@ -15,7 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:student_app/Controller/LoginScreenController.dart';
 
 class TotalController extends GetxController {
-  RxList<HomeWork> HomeWorks = ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
+  RxList<HomeWork> HomeWorks =
+      ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
   RxList<dynamic> answerNote = <dynamic>[].obs;
   late Timer _timer;
   String? id;
@@ -27,22 +28,23 @@ class TotalController extends GetxController {
     super.onInit();
 
     id = await const FlutterSecureStorage().read(key: "id");
-    debugPrint("id: $id");
+    //debugPrint("id: $id");
     LocalStorage storage = LocalStorage(id!);
 
     bool ready = await storage.ready;
-    debugPrint(ready.toString());
-    debugPrint(storage.getItem("HomeWork").toString());
-    debugPrint(storage.getItem("AnswerNote").toString());
-    debugPrint(jsonDecode(storage.getItem("HomeWork")).toString());
-    debugPrint(jsonDecode(storage.getItem("AnswerNote")).toString());
+    // debugPrint(ready.toString());
+    // debugPrint(storage.getItem("HomeWork").toString());
+    // debugPrint(storage.getItem("AnswerNote").toString());
+    // debugPrint(jsonDecode(storage.getItem("HomeWork")).toString());
+    // debugPrint(jsonDecode(storage.getItem("AnswerNote")).toString());
     if (ready) {
       String? homeWorkJsonString = storage.getItem("HomeWork");
       String? answerNoteJsonString = storage.getItem("AnswerNote");
       if (homeWorkJsonString != null) {
         List<dynamic> homeWorkJsonList = jsonDecode(homeWorkJsonString);
 
-        HomeWorks.value = homeWorkJsonList.map((json) => HomeWork.fromJson(json)).toList();
+        HomeWorks.value =
+            homeWorkJsonList.map((json) => HomeWork.fromJson(json)).toList();
       }
       if (answerNoteJsonString != null) {
         List<dynamic> answerNoteJsonList = jsonDecode(answerNoteJsonString);
@@ -70,7 +72,8 @@ class TotalController extends GetxController {
       DateTime now = DateTime.now();
       int value = 0;
       for (var element in HomeWorks) {
-        if (element.deadLine.compareTo(now) > 0 && element.isFinish.value == false) {
+        if (element.deadLine.compareTo(now) > 0 &&
+            element.isFinish.value == false) {
           value++;
         }
       }

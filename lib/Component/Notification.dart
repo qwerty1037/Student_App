@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:student_app/Component/Download.dart';
 
 class FlutterLocalNotification {
   FlutterLocalNotification._();
@@ -74,6 +77,13 @@ class NotificationController extends GetxController {
       sound: true,
     );
 
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+
     debugPrint("${settings.authorizationStatus}");
     _getToken();
     _onMessage();
@@ -113,6 +123,19 @@ class NotificationController extends GetxController {
           requestSoundPermission: false,
         ),
       ),
+      onDidReceiveNotificationResponse: (NotificationResponse details) async {
+        Get.to(Downloader());
+        /*
+        debugPrint(
+            'onDidReceiveNotificationResponse - payload: ${details.payload}');
+        final payload = details.payload ?? '';
+        final parsedJson = jsonDecode(payload);
+        if (!parsedJson.containsKey('routeTo')) {
+          return;
+        }
+        Get.toNamed(parsedJson['routeTo']);
+        */
+      },
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -145,5 +168,17 @@ class NotificationController extends GetxController {
             'Message also contained a notification: ${message.notification!.body}');
       }
     });
+
+    // Background 상태. Notification 서랍에서 메시지 터치하여 앱으로 돌아왔을 때의 동작은 여기서.
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage rm) {
+      Get.to(Downloader());
+    });
+
+    // Terminated 상태에서 도착한 메시지에 대한 처리
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      Get.to(Downloader());
+    }
   }
 }
