@@ -32,14 +32,10 @@ void main() async {
   );
 
   await FlutterDownloader.initialize(debug: true);
-  await FirebaseAppCheck.instance.activate(
-    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    androidProvider: AndroidProvider.debug,
-  );
+
   await Permission.storage.request();
 
   KakaoSdk.init(nativeAppKey: "3dc3a9ef5fd5367f85038b1332c85545");
-  await FlutterLocalNotification.init();
 
   Get.put(SettingController());
   runApp(const MyApp());

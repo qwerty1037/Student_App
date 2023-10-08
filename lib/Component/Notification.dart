@@ -4,61 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:student_app/Component/Download.dart';
-
-class FlutterLocalNotification {
-  FlutterLocalNotification._();
-
-  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  static init() async {
-    AndroidInitializationSettings androidInitializationSettings =
-        const AndroidInitializationSettings('mipmap/ic_launcher');
-
-    DarwinInitializationSettings iosInitializationSettings =
-        const DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-    );
-
-    InitializationSettings initializationSettings = InitializationSettings(
-      android: androidInitializationSettings,
-      iOS: iosInitializationSettings,
-    );
-    debugPrint("intiialize");
-
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
-
-  static requestNotificationPermission() {
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-  }
-
-  static Future<void> showNotification() async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel id', 'channel name',
-            channelDescription: 'channel description',
-            importance: Importance.max,
-            priority: Priority.max,
-            showWhen: false);
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-        android: androidNotificationDetails,
-        iOS: DarwinNotificationDetails(badgeNumber: 1));
-
-    await flutterLocalNotificationsPlugin.show(
-        0, 'test title', 'test body', notificationDetails);
-  }
-}
+import 'package:student_app/Component/Problem.dart';
+import 'Download.dart';
 
 class NotificationController extends GetxController {
   //메시징 서비스 기본 객체 생성
@@ -166,6 +113,17 @@ class NotificationController extends GetxController {
       if (message.notification != null) {
         debugPrint(
             'Message also contained a notification: ${message.notification!.body}');
+      }
+
+      if (message.data != null) {
+        String _title = message.data['title'];
+        DateTime _deadline = DateTime.parse(message.data['deadline']);
+        String _teacherName = message.data['teacherName'];
+        //List<Problem> problems = [];
+        //message.data["problems"][]
+        debugPrint("title: $_title");
+        debugPrint("deadline: $_deadline");
+        debugPrint("teacherName; $_teacherName");
       }
     });
 

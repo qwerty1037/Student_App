@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_drawing_board/flutter_drawing_board.dart';
 import 'package:flutter_drawing_board/paint_contents.dart';
 import 'package:get/get.dart';
+import 'package:student_app/Component/SerializedProblemImage.dart';
 
 class Problem {
-  Problem({required this.questions, this.minutes = 0, this.seconds = 0, this.answerNote = false});
+  Problem(
+      {required this.questions,
+      this.minutes = 0,
+      this.seconds = 0,
+      this.answerNote = false});
 
   int minutes;
   int seconds;
@@ -76,12 +83,24 @@ class Problem {
     };
   }
 
+//"questions":["다음중 옳은 것을 고르시오?"]
+//"questions":[{"path":"/storage/emulated/0/Download/Test2"}]
   factory Problem.fromJson(Map<String, dynamic> json) {
+    List<dynamic> _question = [];
+
+    for (int i = 0; i < json['questions'].length; i++) {
+      if (json['questions'][i] is Map<String, dynamic>) {
+        _question.add(SerializableProblemImage.fromJson(json['questions'][i]));
+      } else if (json['questions'][i] is String) {
+        _question.add(json['questions'][i]);
+      }
+    }
+
     return Problem(
       minutes: json['minutes'],
       seconds: json['seconds'],
       answerNote: json['answerNote'],
-      questions: json['questions'],
+      questions: _question,
     )
       ..isSolved.value = json['isSolved']
       ..problemDrawingList = json['problemDrawingList']

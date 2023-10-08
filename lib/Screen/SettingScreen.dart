@@ -1,13 +1,17 @@
 import 'dart:ffi';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:student_app/Component/Download.dart';
+import 'package:student_app/Component/DownloadPage.dart';
 import 'package:student_app/Component/Notification.dart';
 
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:student_app/Component/data.dart';
 import 'package:student_app/Controller/SettingController.dart';
 import 'package:student_app/Screen/LoginScreen.dart';
 import 'package:student_app/Screen/ThemeColorScreen.dart';
@@ -76,15 +80,39 @@ class SettingScreen extends StatelessWidget {
                   switchValue: settingController.taskPushAlert,
                 ),
                 SettingsTile(
-                  title: "알림 테스트",
-                  onPressed: (BuildContext context) {
-                    FlutterLocalNotification.showNotification();
+                  title: "task추가",
+                  onPressed: (BuildContext context) async {
+                    Reference ref =
+                        FirebaseStorage.instance.ref().child('task1.zip');
+                    String url = await ref.getDownloadURL();
+                    DownloadItems.add(
+                      name: "Test2",
+                      url: url,
+                      deadline: DateTime(2023, 10, 11, 23, 59),
+                      teacherName: 'God',
+                      problemNum: 5,
+                    );
+                  },
+                ),
+                SettingsTile(
+                  title: "tasks삭제",
+                  onPressed: (BuildContext context) async {
+                    var task = await FlutterDownloader.loadTasks();
+                    for (final element in task!) {
+                      FlutterDownloader.remove(taskId: element.taskId);
+                    }
                   },
                 ),
                 SettingsTile(
                   title: "다운로드 테스트",
-                  onPressed: (BuildContext context) {
-                    Get.to(() => const Downloader());
+                  onPressed: (BuildContext context) async {
+                    const _title = 'flutter_downloader demo';
+                    final platform = Theme.of(context).platform;
+
+                    Get.to(() => DownloadPage(
+                          title: _title,
+                          platform: platform,
+                        ));
                   },
                 ),
                 SettingsTile(

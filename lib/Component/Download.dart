@@ -33,7 +33,7 @@ class _DownloaderState extends State<Downloader> {
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
       String id = data[0];
-      DownloadTaskStatus status = data[1];
+      int status = data[1];
       int progress = data[2];
       setState(() {});
     });
@@ -56,16 +56,19 @@ class _DownloaderState extends State<Downloader> {
           // final userCredential =
           //     await FirebaseAuth.instance.signInAnonymously();
           String dir = (await getApplicationDocumentsDirectory()).path;
+          debugPrint("getApplicationDocumentsDirectory(): ${dir}");
           Reference ref = storage.ref().child('test.pdf');
           String url = await ref.getDownloadURL();
 
           await FlutterDownloader.enqueue(
             url: url,
-            savedDir: '$dir/',
+            savedDir: dir,
+            fileName: 'testFile',
             saveInPublicStorage: true,
             showNotification: true,
             openFileFromNotification: true,
           );
+          //final tasks = await FlutterDownloader.loadTasks();
         },
       ),
     );

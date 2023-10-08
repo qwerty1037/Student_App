@@ -32,7 +32,8 @@ class SolveScreen extends StatelessWidget {
                     "${controller.index.value + 1}번 문제",
                   ),
                   ProblemTimer(
-                    key: Key(controller.index.value.toString() + controller.refreshTimer.value.toString()),
+                    key: Key(controller.index.value.toString() +
+                        controller.refreshTimer.value.toString()),
                     problem: controller.problems[controller.index.value],
                     refresh: controller.refreshTimer.value,
                   )
@@ -80,7 +81,8 @@ class SolveScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: DrawingBoard(
                       key: Key(controller.index.value.toString()),
-                      controller: controller.problems[controller.index.value].problemDrawingController,
+                      controller: controller.problems[controller.index.value]
+                          .problemDrawingController,
                       background: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.7,
@@ -122,10 +124,13 @@ class SolveScreen extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 0.1,
                             child: DrawingBoard(
                               key: Key(controller.index.value.toString()),
-                              controller: controller.problems[controller.index.value].answerDrawingController,
+                              controller: controller
+                                  .problems[controller.index.value]
+                                  .answerDrawingController,
                               background: Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
-                                height: MediaQuery.of(context).size.height * 0.1,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
                                 color: Colors.white,
                               ),
                               showDefaultActions: false,
@@ -136,7 +141,9 @@ class SolveScreen extends StatelessWidget {
                       ),
                       IconButton(
                           onPressed: () {
-                            controller.problems[controller.index.value].answerDrawingController.clear();
+                            controller.problems[controller.index.value]
+                                .answerDrawingController
+                                .clear();
                           },
                           icon: const Icon(Icons.delete))
                     ],
@@ -144,21 +151,29 @@ class SolveScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   //저장 버튼
                   Visibility(
-                    visible: controller.problems[controller.index.value].isSolved.value == false,
+                    visible: controller
+                            .problems[controller.index.value].isSolved.value ==
+                        false,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved.value = true;
+                        controller.problems[controller.index.value].isSolved
+                            .value = true;
                         controller.incrementIndex(context);
-                        Get.find<TotalController>().HomeWorks[controller.homeWorkIndex].checkFinished();
+                        Get.find<TotalController>()
+                            .homeWorks[controller.homeWorkIndex]
+                            .checkFinished();
                       },
                       child: const Text("풀이 완료하기"),
                     ),
                   ),
                   Visibility(
-                    visible: controller.problems[controller.index.value].isSolved == true,
+                    visible:
+                        controller.problems[controller.index.value].isSolved ==
+                            true,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.problems[controller.index.value].isSolved.value = false;
+                        controller.problems[controller.index.value].isSolved
+                            .value = false;
                         controller.restartTimer();
                       },
                       child: const Text("풀이 수정하기"),

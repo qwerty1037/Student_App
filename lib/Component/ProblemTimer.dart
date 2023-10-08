@@ -46,7 +46,7 @@ class ProblemTimerState extends State<ProblemTimer> {
           }
         });
       }
-      Get.find<TotalController>().HomeWorks.refresh();
+      Get.find<TotalController>().homeWorks.refresh();
     });
   }
 

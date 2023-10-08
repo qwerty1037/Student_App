@@ -15,8 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:student_app/Controller/LoginScreenController.dart';
 
 class TotalController extends GetxController {
-  RxList<HomeWork> HomeWorks =
-      ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
+  RxList<HomeWork> homeWorks =
+      <HomeWork>[].obs; //ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
   RxList<dynamic> answerNote = <dynamic>[].obs;
   late Timer _timer;
   String? id;
@@ -37,13 +37,18 @@ class TotalController extends GetxController {
     // debugPrint(storage.getItem("AnswerNote").toString());
     // debugPrint(jsonDecode(storage.getItem("HomeWork")).toString());
     // debugPrint(jsonDecode(storage.getItem("AnswerNote")).toString());
+    // debugPrint(ready.toString());
+    // debugPrint(storage.getItem("HomeWork").toString());
+    // debugPrint(storage.getItem("AnswerNote").toString());
+    // debugPrint(jsonDecode(storage.getItem("HomeWork")).toString());
+    // debugPrint(jsonDecode(storage.getItem("AnswerNote")).toString());
     if (ready) {
       String? homeWorkJsonString = storage.getItem("HomeWork");
       String? answerNoteJsonString = storage.getItem("AnswerNote");
       if (homeWorkJsonString != null) {
         List<dynamic> homeWorkJsonList = jsonDecode(homeWorkJsonString);
 
-        HomeWorks.value =
+        homeWorks.value =
             homeWorkJsonList.map((json) => HomeWork.fromJson(json)).toList();
       }
       if (answerNoteJsonString != null) {
@@ -60,7 +65,7 @@ class TotalController extends GetxController {
     }
 
     DateTime now = DateTime.now();
-    for (var element in HomeWorks) {
+    for (var element in homeWorks) {
       if (element.deadLine.compareTo(now) > 0) {
         totalRemained++;
         if (element.isFinish.value == false) {
@@ -68,10 +73,10 @@ class TotalController extends GetxController {
         }
       }
     }
-    ever(HomeWorks, (_) {
+    ever(homeWorks, (_) {
       DateTime now = DateTime.now();
       int value = 0;
-      for (var element in HomeWorks) {
+      for (var element in homeWorks) {
         if (element.deadLine.compareTo(now) > 0 &&
             element.isFinish.value == false) {
           value++;

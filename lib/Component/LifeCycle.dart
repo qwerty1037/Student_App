@@ -14,9 +14,15 @@ class AppLifecycleObserver with WidgetsBindingObserver {
     if (state == AppLifecycleState.paused) {
       var id = await const FlutterSecureStorage().read(key: "id");
 
-      List<dynamic> homeWorkJsonList = Get.find<TotalController>().HomeWorks.map((homeWork) => homeWork.toJson()).toList();
+      List<dynamic> homeWorkJsonList = Get.find<TotalController>()
+          .homeWorks
+          .map((homeWork) => homeWork.toJson())
+          .toList();
       String homeWorkJsonString = jsonEncode(homeWorkJsonList);
-      List<dynamic> AnswerNoteJsonList = Get.find<TotalController>().answerNote.map((answerNote) => answerNote.toJson()).toList();
+      List<dynamic> AnswerNoteJsonList = Get.find<TotalController>()
+          .answerNote
+          .map((answerNote) => answerNote.toJson())
+          .toList();
       String answerNoteJsonString = jsonEncode(AnswerNoteJsonList);
 
       await LocalStorage(id!).setItem("HomeWork", homeWorkJsonString);

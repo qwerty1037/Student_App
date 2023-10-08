@@ -12,7 +12,7 @@ class HomeWorkListScreen extends StatelessWidget {
   const HomeWorkListScreen({super.key});
 
   List<GestureDetector> _buildHomeWork(BuildContext context) {
-    List<HomeWork> HomeWorks = Get.find<TotalController>().HomeWorks;
+    List<HomeWork> HomeWorks = Get.find<TotalController>().homeWorks;
     if (HomeWorks.isEmpty) {
       return const <GestureDetector>[];
     }
@@ -20,7 +20,8 @@ class HomeWorkListScreen extends StatelessWidget {
     return HomeWorks.map((HomeWork) {
       return GestureDetector(
         onTap: () {
-          Get.to(() => ProblemList(), arguments: {"HomeWorkIndex": HomeWorks.indexOf(HomeWork)});
+          Get.to(() => ProblemList(),
+              arguments: {"HomeWorkIndex": HomeWorks.indexOf(HomeWork)});
         },
         child: GetX<TotalController>(
           builder: (controller) => Card(
@@ -34,17 +35,34 @@ class HomeWorkListScreen extends StatelessWidget {
                     child: FittedBox(
                       child: Text(
                         HomeWork.title,
-                        style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                        style: HomeWork.isFinish.value
+                            ? const TextStyle(color: Colors.grey)
+                            : TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer),
                       ),
                     ),
                   ),
                   Text(
                     "${HomeWork.teacherName} 선생님",
-                    style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                    style: HomeWork.isFinish.value
+                        ? const TextStyle(color: Colors.grey)
+                        : TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                            fontSize: 14),
                   ),
                   Text(
                     "${HomeWork.deadLine.month}월 ${HomeWork.deadLine.day}일",
-                    style: HomeWork.isFinish.value ? const TextStyle(color: Colors.grey) : TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer, fontSize: 14),
+                    style: HomeWork.isFinish.value
+                        ? const TextStyle(color: Colors.grey)
+                        : TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                            fontSize: 14),
                   )
                 ],
               ),
@@ -63,13 +81,16 @@ class HomeWorkListScreen extends StatelessWidget {
       ),
       Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-            Colors.white10,
-            Colors.white10,
-            Colors.black12,
-            Colors.black12,
-            Colors.black12,
-          ]),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.white10,
+                Colors.white10,
+                Colors.black12,
+                Colors.black12,
+                Colors.black12,
+              ]),
         ),
       ),
       Scaffold(
