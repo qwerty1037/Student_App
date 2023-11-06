@@ -8,6 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:student_app/Component/Homework.dart';
 import 'package:student_app/Component/Problem.dart';
@@ -239,12 +240,13 @@ class _DownloadPageState extends State<DownloadPage> {
     }
 
     await _waitUntilDone();
+    var id = await const FlutterSecureStorage().read(key: "id");
 
     debugPrint("unzip start");
     final zipFile = File(
-        "/storage/emulated/0/Download/${task.name}.zip"); //File("$_localPath/${task.name}.zip");
+        "/storage/emulated/0/Download/$id/${task.name}.zip"); //File("$_localPath/${task.name}.zip");
     final destinationDir = Directory(
-        "/storage/emulated/0/Download/${task.name}"); //Directory("$_localPath/${task.name}");
+        "/storage/emulated/0/Download/$id/${task.name}"); //Directory("$_localPath/${task.name}");
     try {
       ZipFile.extractToDirectory(
           zipFile: zipFile, destinationDir: destinationDir);
@@ -256,7 +258,7 @@ class _DownloadPageState extends State<DownloadPage> {
     for (int i = 0; i < task.problemNum; i++) {
       _problem.add(Problem(questions: [
         SerializableProblemImage(
-            "/storage/emulated/0/Download/${task.name}/${i + 1}.png"),
+            "/storage/emulated/0/Download/$id/${task.name}/${i + 1}.png"),
       ]));
     }
 

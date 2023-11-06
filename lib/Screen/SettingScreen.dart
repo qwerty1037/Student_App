@@ -104,6 +104,10 @@ class SettingScreen extends StatelessWidget {
                   },
                 ),
                 SettingsTile(
+                  title: "알림 테스트",
+                  onPressed: (BuildContext context) async {},
+                ),
+                SettingsTile(
                   title: "다운로드 테스트",
                   onPressed: (BuildContext context) async {
                     const _title = 'flutter_downloader demo';
