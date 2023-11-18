@@ -19,6 +19,7 @@ class SolveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<SolveModeController>(builder: (controller) {
       final drawingController = controller.problems[controller.index.value].problemDrawingController;
+
       return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         appBar: AppBar(
@@ -59,14 +60,6 @@ class SolveScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Container(
-              //   color: Colors.white,
-              //   child: _buildProblem(
-              //     controller.problems[controller.index.value],
-              //     context,
-              //   ),
-              // ),
-
               SingleChildScrollView(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -74,14 +67,9 @@ class SolveScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       DrawingBoard(
-                        onPointerUp: (pue) {
-                          if (pue.kind == PointerDeviceKind.touch) {
-                            drawingController.reduceFingerCount(pue.localPosition);
-                          }
-                        },
                         onPointerDown: (pde) {
                           if (pde.kind == PointerDeviceKind.touch) {
-                            drawingController.addFingerCount(pde.localPosition);
+                            drawingController.endDraw();
                           }
                         },
                         boardBoundaryMargin: EdgeInsets.zero,
