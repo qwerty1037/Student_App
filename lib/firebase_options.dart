@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,20 +43,38 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDabAmI3m_FR8a53EiSEQrU-dBffR8IsLk',
+    appId: '1:782499659196:web:55385579d9d0b15d8e7fb9',
+    messagingSenderId: '782499659196',
+    projectId: 'bateacher',
+    authDomain: 'bateacher.firebaseapp.com',
+    storageBucket: 'bateacher.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCrBcbiPIpmZYaZI-_9tXJDGgVQxhhdqIc',
-    appId: '1:148965533999:android:b822ccf9064ca2ade9d9da',
-    messagingSenderId: '148965533999',
-    projectId: 'student-app-flufire-001',
-    storageBucket: 'student-app-flufire-001.appspot.com',
+    apiKey: 'AIzaSyCMLpfl7riao0zfN34AhBJuzJnm5aFK3e8',
+    appId: '1:782499659196:android:8b87e92086e27f788e7fb9',
+    messagingSenderId: '782499659196',
+    projectId: 'bateacher',
+    storageBucket: 'bateacher.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCyeuN6qtSiHfrK8kUc-dGEmwlrLlEmTe0',
-    appId: '1:148965533999:ios:0714c9ac493f3bd1e9d9da',
-    messagingSenderId: '148965533999',
-    projectId: 'student-app-flufire-001',
-    storageBucket: 'student-app-flufire-001.appspot.com',
+    apiKey: 'AIzaSyBtDCJB3wqptmqqBoEKWHjN9hMwgH7HKGY',
+    appId: '1:782499659196:ios:43e8f284f09b7f1d8e7fb9',
+    messagingSenderId: '782499659196',
+    projectId: 'bateacher',
+    storageBucket: 'bateacher.appspot.com',
+    iosBundleId: 'com.example.studentApp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBtDCJB3wqptmqqBoEKWHjN9hMwgH7HKGY',
+    appId: '1:782499659196:ios:f78f80c0f8afce1f8e7fb9',
+    messagingSenderId: '782499659196',
+    projectId: 'bateacher',
+    storageBucket: 'bateacher.appspot.com',
     iosBundleId: 'com.example.studentApp.RunnerTests',
   );
 }

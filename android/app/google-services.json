@@ -1,51 +1,26 @@
 {
   "project_info": {
-    "project_number": "148965533999",
-    "project_id": "student-app-flufire-001",
-    "storage_bucket": "student-app-flufire-001.appspot.com"
+    "project_number": "782499659196",
+    "project_id": "bateacher",
+    "storage_bucket": "bateacher.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:148965533999:android:b822ccf9064ca2ade9d9da",
+        "mobilesdk_app_id": "1:782499659196:android:8b87e92086e27f788e7fb9",
         "android_client_info": {
           "package_name": "com.alpha.student_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "148965533999-ecbfechfk29qitod54nbbd2lbiplj31l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.alpha.student_app",
-            "certificate_hash": "93762a5b81e67496195fc183f1a4b246375b0f63"
-          }
-        },
-        {
-          "client_id": "148965533999-1obgr2rchj2ucl4ils642ntfmj6th7v3.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCrBcbiPIpmZYaZI-_9tXJDGgVQxhhdqIc"
+          "current_key": "AIzaSyCMLpfl7riao0zfN34AhBJuzJnm5aFK3e8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "148965533999-1obgr2rchj2ucl4ils642ntfmj6th7v3.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "148965533999-hda9tjuh03s1ob754stith3pr0g6iamg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.studentApp.RunnerTests"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

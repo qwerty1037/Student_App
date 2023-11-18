@@ -21,7 +21,9 @@ class HomeScreen extends StatelessWidget {
       onWillPop: () async {
         DateTime now = DateTime.now();
 
-        if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+        if (currentBackPressTime == null ||
+            now.difference(currentBackPressTime!) >
+                const Duration(seconds: 2)) {
           currentBackPressTime = now;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -41,13 +43,16 @@ class HomeScreen extends StatelessWidget {
         ),
         Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-              Colors.white10,
-              Colors.white10,
-              Colors.black12,
-              Colors.black12,
-              Colors.black12,
-            ]),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.white10,
+                  Colors.white10,
+                  Colors.black12,
+                  Colors.black12,
+                  Colors.black12,
+                ]),
           ),
         ),
         Scaffold(
@@ -75,8 +80,13 @@ class HomeScreen extends StatelessWidget {
                   GetX<TotalController>(
                     builder: (controller) {
                       return Text(
-                        controller.unsolvedRemained.value == 0 ? "남은 과제가 없습니다" : "${controller.unsolvedRemained}개의 과제가 남았습니다",
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        controller.unsolvedRemained.value == 0
+                            ? "남은 과제가 없습니다"
+                            : "${controller.unsolvedRemained}개의 과제가 남았습니다",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                       );
@@ -103,12 +113,26 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       '과제',
-                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer, fontWeight: FontWeight.bold),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer,
+                                              fontWeight: FontWeight.bold),
                                     ),
-                                    GetX<TotalController>(builder: (controller) {
+                                    GetX<TotalController>(
+                                        builder: (controller) {
                                       return Text(
                                         '${controller.unsolvedRemained}/${controller.totalRemained}',
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimaryContainer),
                                       );
                                     }),
                                   ],
@@ -129,7 +153,14 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       '설정',
-                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer, fontWeight: FontWeight.bold),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer,
+                                              fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -155,7 +186,14 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       '오답노트',
-                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer, fontWeight: FontWeight.bold),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer,
+                                              fontWeight: FontWeight.bold),
                                     )
                                   ],
                                 ),
@@ -176,7 +214,14 @@ class HomeScreen extends StatelessWidget {
                                     Text(
                                       '커뮤니티 또는 \n주변 학원/과외 알아보기 \n 들어갈 자리',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer, fontWeight: FontWeight.bold),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer,
+                                              fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
