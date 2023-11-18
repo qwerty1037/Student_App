@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:firebase_core/firebase_core.dart';
@@ -55,7 +53,7 @@ class MyApp extends StatelessWidget {
               permanent: true,
             );
           }),
-          title: 'Student App',
+          title: '바선생 학생용',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               brightness: controller.brightness,
