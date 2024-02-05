@@ -15,8 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:student_app/Controller/LoginScreenController.dart';
 
 class TotalController extends GetxController {
-  RxList<HomeWork> homeWorks =
-      <HomeWork>[].obs; //ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
+  RxList<HomeWork> homeWorks = ExampleHomeWork.obs; //ExampleHomeWork.obs; // 추후 ExampleHomeWork부분 []로 변경
   RxList<dynamic> answerNote = <dynamic>[].obs;
   late Timer _timer;
   String? id;
@@ -48,9 +47,9 @@ class TotalController extends GetxController {
       if (homeWorkJsonString != null) {
         List<dynamic> homeWorkJsonList = jsonDecode(homeWorkJsonString);
 
-        homeWorks.value =
-            homeWorkJsonList.map((json) => HomeWork.fromJson(json)).toList();
+        homeWorks.value = homeWorkJsonList.map((json) => HomeWork.fromJson(json)).toList();
       }
+
       if (answerNoteJsonString != null) {
         List<dynamic> answerNoteJsonList = jsonDecode(answerNoteJsonString);
 
@@ -77,8 +76,7 @@ class TotalController extends GetxController {
       DateTime now = DateTime.now();
       int value = 0;
       for (var element in homeWorks) {
-        if (element.deadLine.compareTo(now) > 0 &&
-            element.isFinish.value == false) {
+        if (element.deadLine.compareTo(now) > 0 && element.isFinish.value == false) {
           value++;
         }
       }

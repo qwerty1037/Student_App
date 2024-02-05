@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -82,8 +80,7 @@ class SettingScreen extends StatelessWidget {
                 SettingsTile(
                   title: "task추가",
                   onPressed: (BuildContext context) async {
-                    Reference ref =
-                        FirebaseStorage.instance.ref().child('task1.zip');
+                    Reference ref = FirebaseStorage.instance.ref().child('task1.zip');
                     String url = await ref.getDownloadURL();
                     DownloadItems.add(
                       name: "Test2",
@@ -110,11 +107,11 @@ class SettingScreen extends StatelessWidget {
                 SettingsTile(
                   title: "다운로드 테스트",
                   onPressed: (BuildContext context) async {
-                    const _title = 'flutter_downloader demo';
+                    const title = 'flutter_downloader demo';
                     final platform = Theme.of(context).platform;
 
                     Get.to(() => DownloadPage(
-                          title: _title,
+                          title: title,
                           platform: platform,
                         ));
                   },
@@ -146,8 +143,7 @@ class SettingScreen extends StatelessWidget {
         onTap: () {
           settingController.seedColorIndex = kThemeSeedColors.indexOf(color);
           Get.changeTheme(ThemeData.light().copyWith(
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: settingController.seedColor),
+            colorScheme: ColorScheme.fromSeed(seedColor: settingController.seedColor),
             useMaterial3: true,
           ));
         },
